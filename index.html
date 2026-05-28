@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vitality Points Explorer • Discovery Vitality</title>
     
-    <!-- Cache Busting Headers -->
+    <!-- Cache Busting -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -18,7 +18,6 @@
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-        *, *::before, *::after { box-sizing: border-box; }
         body { font-family: 'Inter', system_ui, sans-serif; }
         .header-bg { background: linear-gradient(90deg, #00a3e0, #0077b6); }
         .section-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -45,7 +44,6 @@
                 zone60plus: '60%+'
             });
 
-            // Load saved DOB
             useEffect(() => {
                 const saved = localStorage.getItem('vitalityDOB');
                 if (saved) {
@@ -105,7 +103,6 @@
 
             return (
                 <div className="min-h-screen bg-gray-50">
-                    {/* HEADER */}
                     <div className="header-bg text-white pb-8 md:pb-12">
                         <div className="max-w-7xl mx-auto px-4 md:px-6 pt-6 md:pt-8">
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -113,34 +110,31 @@
                                     <i className="fa-solid fa-heart-pulse text-5xl"></i>
                                     <div>
                                         <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">Vitality Points Explorer</h1>
-                                        <p className="text-blue-100 mt-1 text-sm md:text-base">Discovery Vitality • Complete Points Guide</p>
+                                        <p className="text-blue-100 mt-1 text-sm md:text-base">Discovery Vitality • Official Points &amp; Partners Guide (2025/2026)</p>
                                     </div>
                                 </div>
-                                <a 
-                                    href="https://www.discovery.co.za/assets/discoverycoza/vitality/how-to-join/points-and-partners.pdf"
-                                    target="_blank"
-                                    className="flex items-center gap-x-2 bg-white/90 text-[#00a3e0] px-5 py-3 rounded-2xl font-semibold hover:bg-white text-sm md:text-base whitespace-nowrap"
-                                >
+                                <a href="https://www.discovery.co.za/assets/discoverycoza/vitality/how-to-join/points-and-partners.pdf" 
+                                   target="_blank"
+                                   className="flex items-center gap-x-2 bg-white/90 text-[#00a3e0] px-5 py-3 rounded-2xl font-semibold hover:bg-white text-sm md:text-base whitespace-nowrap">
                                     <i className="fa-solid fa-file-pdf"></i>
                                     Original PDF
                                 </a>
                             </div>
 
-                            {/* DOB Calculator */}
                             <div className="mt-8 md:mt-10 bg-white/10 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/30">
                                 <div className="flex flex-col md:flex-row gap-6">
                                     <div className="flex-1">
-                                        <h2 className="text-xl md:text-2xl font-semibold">Personal Heart Rate Zones</h2>
-                                        <p className="text-blue-100 mt-2 text-sm md:text-base">Enter your date of birth for exact BPM ranges</p>
+                                        <h2 className="text-xl md:text-2xl font-semibold">Your Personal Heart Rate Zones</h2>
+                                        <p className="text-blue-100 mt-2 text-sm md:text-base">Enter date of birth → tables update with exact BPM ranges</p>
                                     </div>
                                     <div className="flex-1">
-  <input 
-    type="date"
-    value={dob}
-    onChange={handleDOBChange}
-    className="max-w-xs bg-white text-gray-900 rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-4 focus:ring-white/50"
-  />
-</div>
+                                        <input 
+                                            type="date" 
+                                            value={dob}
+                                            onChange={handleDOBChange}
+                                            className="w-full bg-white text-gray-900 rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-4 focus:ring-white/50"
+                                        />
+                                    </div>
                                 </div>
 
                                 {hasDOB && (
@@ -179,13 +173,13 @@
                     </div>
 
                     <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
-                        {/* Navigation */}
                         <div className="flex flex-wrap gap-2 mb-10 border-b pb-6 overflow-x-auto">
                             <a href="#health" className="nav-pill bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-2.5 rounded-3xl text-sm font-medium whitespace-nowrap">Health Check</a>
                             <a href="#screenings" className="nav-pill bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-2.5 rounded-3xl text-sm font-medium whitespace-nowrap">Screenings</a>
                             <a href="#fitness" className="nav-pill bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-2.5 rounded-3xl text-sm font-medium whitespace-nowrap">Fitness</a>
                             <a href="#eating" className="nav-pill bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-2.5 rounded-3xl text-sm font-medium whitespace-nowrap">Eat Healthy</a>
                             <a href="#family" className="nav-pill bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-2.5 rounded-3xl text-sm font-medium whitespace-nowrap">Family</a>
+                            <a href="#vaccinations" className="nav-pill bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-2.5 rounded-3xl text-sm font-medium whitespace-nowrap">Vaccinations</a>
                             <a href="#chronic" className="nav-pill bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-2.5 rounded-3xl text-sm font-medium whitespace-nowrap">Chronic</a>
                         </div>
 
@@ -194,20 +188,20 @@
                             <div className="flex items-center gap-x-4 mb-6">
                                 <div className="w-11 h-11 bg-[#00a3e0] text-white rounded-2xl flex items-center justify-center text-3xl">📋</div>
                                 <div>
-                                    <h2 className="text-2xl md:text-3xl font-semibold">Online Assessments & Vitality Health Check</h2>
-                                    <p className="text-gray-500">Maximum 25,000 points per year (18+)</p>
+                                    <h2 className="text-2xl md:text-3xl font-semibold">01 • Online Assessments &amp; Vitality Health Check</h2>
+                                    <p className="text-gray-500">Max 25,000 points per year (18+)</p>
                                 </div>
                             </div>
                             <div className="grid md:grid-cols-2 gap-8">
                                 <div>
                                     <h3 className="font-semibold mb-4">Online Assessments</h3>
                                     <ul className="space-y-3">
-                                        <li className="flex justify-between bg-gray-50 p-4 rounded-2xl"><span>Vitality Age</span><span className="font-semibold text-[#00a3e0]">1,500 once/year</span></li>
-                                        <li className="flex justify-between bg-gray-50 p-4 rounded-2xl"><span>Mental Wellbeing Assessments</span><span className="font-semibold text-[#00a3e0]">500 points × 2/year</span></li>
+                                        <li className="flex justify-between bg-gray-50 p-4 rounded-2xl"><span>Vitality Age</span><span className="font-semibold text-[#00a3e0]">1,500 once a year</span></li>
+                                        <li className="flex justify-between bg-gray-50 p-4 rounded-2xl"><span>Mental Wellbeing Assessments</span><span className="font-semibold text-[#00a3e0]">500 × 2 = 1,000 per year</span></li>
                                     </ul>
                                 </div>
                                 <div>
-                                    <h3 className="font-semibold mb-4">Vitality Health Check Points</h3>
+                                    <h3 className="font-semibold mb-4">Vitality Health Check (5 measures)</h3>
                                     <div className="overflow-x-auto">
                                         <table className="w-full text-sm">
                                             <thead className="bg-gray-100">
@@ -217,9 +211,12 @@
                                                 <tr><td>5</td><td className="font-semibold text-[#00a3e0]">22,500</td><td>—</td></tr>
                                                 <tr><td>4</td><td className="font-semibold text-[#00a3e0]">15,000</td><td className="font-semibold text-[#00a3e0]">5,000</td></tr>
                                                 <tr><td>3</td><td className="font-semibold text-[#00a3e0]">10,000</td><td className="font-semibold text-[#00a3e0]">5,000</td></tr>
+                                                <tr><td>2</td><td className="font-semibold text-[#00a3e0]">7,500</td><td className="font-semibold text-[#00a3e0]">5,000</td></tr>
+                                                <tr><td>1</td><td className="font-semibold text-[#00a3e0]">5,000</td><td className="font-semibold text-[#00a3e0]">5,000</td></tr>
                                             </tbody>
                                         </table>
                                     </div>
+                                    <p className="text-xs text-gray-500 mt-3">Partial check: 4 results = 5,000 • 3 results = 2,500 • Fewer than 3 = 0</p>
                                 </div>
                             </div>
                         </div>
@@ -228,15 +225,17 @@
                         <div id="screenings" className="section-card bg-white rounded-3xl p-6 md:p-8 mb-8 md:mb-12">
                             <div className="flex items-center gap-x-4 mb-6">
                                 <div className="w-11 h-11 bg-[#00a3e0] text-white rounded-2xl flex items-center justify-center text-3xl">🔬</div>
-                                <h2 className="text-2xl md:text-3xl font-semibold">Additional Screenings</h2>
+                                <h2 className="text-2xl md:text-3xl font-semibold">03 • Additional Screenings (age &amp; gender specific)</h2>
                             </div>
                             <div className="grid md:grid-cols-2 gap-y-4 text-sm">
                                 <div className="flex justify-between"><span>Colon cancer screening (45+)</span><span className="font-semibold text-[#00a3e0]">2,500 once/year</span></div>
-                                <div className="flex justify-between"><span>Mammogram (women 40+)</span><span className="font-semibold text-[#00a3e0]">2,500 once/year</span></div>
-                                <div className="flex justify-between"><span>Pap smear / HPV (women 25-65)</span><span className="font-semibold text-[#00a3e0]">2,500 once/year</span></div>
+                                <div className="flex justify-between"><span>Bone mass density (women 65+, men 70+)</span><span className="font-semibold text-[#00a3e0]">2,500 once/2 years</span></div>
+                                <div className="flex justify-between"><span>Mammogram (women 40+)</span><span className="font-semibold text-[#00a3e0]">2,500 once/2 years</span></div>
+                                <div className="flex justify-between"><span>Pap smear / HPV test (women 25-65)</span><span className="font-semibold text-[#00a3e0]">2,500 once/3-5 years</span></div>
                                 <div className="flex justify-between"><span>Dental check-up</span><span className="font-semibold text-[#00a3e0]">1,000 once/year</span></div>
-                                <div className="flex justify-between"><span>First HIV test</span><span className="font-semibold text-[#00a3e0]">7,500 once</span></div>
+                                <div className="flex justify-between"><span>Glaucoma / vision test (60+)</span><span className="font-semibold text-[#00a3e0]">1,000 once/year</span></div>
                                 <div className="flex justify-between"><span>Hearing test</span><span className="font-semibold text-[#00a3e0]">1,000 once</span></div>
+                                <div className="flex justify-between"><span>First HIV test</span><span className="font-semibold text-[#00a3e0]">7,500 once</span></div>
                             </div>
                         </div>
 
@@ -245,8 +244,8 @@
                             <div className="flex items-center gap-x-4 mb-6">
                                 <div className="w-11 h-11 bg-[#00a3e0] text-white rounded-2xl flex items-center justify-center text-3xl">🏃</div>
                                 <div>
-                                    <h2 className="text-2xl md:text-3xl font-semibold">Get Active – Fitness Points</h2>
-                                    <p className="text-gray-600">Best activity of the day wins • All ranges personalised</p>
+                                    <h2 className="text-2xl md:text-3xl font-semibold">04 • Earn Points for Getting Active</h2>
+                                    <p className="text-gray-600">One activity per day (highest wins) • Up to 25,000 + 10,000 Cardio Fitness Level points</p>
                                 </div>
                             </div>
 
@@ -260,7 +259,9 @@
                                         <tr><td className="px-6 py-4">Vitality online workout (30+ min)</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">50</td></tr>
                                         <tr><td className="px-6 py-4">Vitality Anywhere (30+ min)</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
                                         <tr><td className="px-6 py-4">Gym workout (30+ min)</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">5,000–9,999 steps</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">50</td></tr>
                                         <tr><td className="px-6 py-4">10,000+ steps</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">parkrun</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">300</td></tr>
                                         <tr><td className="px-6 py-4">30–59 min @ {zones.zone60_69}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
                                         <tr><td className="px-6 py-4">60–89 min @ {zones.zone60_69}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">200</td></tr>
                                         <tr><td className="px-6 py-4">90+ min @ {zones.zone60plus}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">300</td></tr>
@@ -282,7 +283,9 @@
                                         <tr><td className="px-6 py-4">Vitality online workout (30+ min)</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">50</td></tr>
                                         <tr><td className="px-6 py-4">Vitality Anywhere (30+ min)</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
                                         <tr><td className="px-6 py-4">Gym workout (30+ min)</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">5,000–7,499 steps</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">50</td></tr>
                                         <tr><td className="px-6 py-4">7,500+ steps</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">parkrun</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">300</td></tr>
                                         <tr><td className="px-6 py-4">30–59 min @ {zones.zone60_69}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
                                         <tr><td className="px-6 py-4">60–89 min @ {zones.zone60_69}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">200</td></tr>
                                         <tr><td className="px-6 py-4">15–29 min @ {zones.zone70_79}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
@@ -296,7 +299,7 @@
                         <div id="eating" className="section-card bg-white rounded-3xl p-6 md:p-8 mb-8 md:mb-12">
                             <div className="flex items-center gap-x-4 mb-6">
                                 <div className="w-11 h-11 bg-[#00a3e0] text-white rounded-2xl flex items-center justify-center text-3xl">🥗</div>
-                                <h2 className="text-2xl md:text-3xl font-semibold">Choose to Eat Healthy</h2>
+                                <h2 className="text-2xl md:text-3xl font-semibold">05 • Choose to Eat Healthy</h2>
                             </div>
                             <div className="flex flex-col md:flex-row gap-8 items-center">
                                 <div className="flex-1 bg-gradient-to-r from-emerald-50 to-amber-50 p-8 rounded-3xl text-center">
@@ -305,7 +308,8 @@
                                 </div>
                                 <div className="flex-1 space-y-6 text-sm">
                                     <div className="flex justify-between"><span>Dietitian consultation</span><span className="font-semibold text-[#00a3e0]">Up to 1,000</span></div>
-                                    <div className="flex justify-between"><span>HealthyWeight programme</span><span className="font-semibold text-[#00a3e0]">1,000</span></div>
+                                    <div className="flex justify-between"><span>HealthyWeight nutrition consultation</span><span className="font-semibold text-[#00a3e0]">1,000</span></div>
+                                    <div className="flex justify-between"><span>4-week HealthyWeight check-in</span><span className="font-semibold text-[#00a3e0]">Additional points</span></div>
                                 </div>
                             </div>
                         </div>
@@ -314,12 +318,29 @@
                         <div id="family" className="section-card bg-white rounded-3xl p-6 md:p-8 mb-8 md:mb-12">
                             <div className="flex items-center gap-x-4 mb-6">
                                 <div className="w-11 h-11 bg-[#00a3e0] text-white rounded-2xl flex items-center justify-center text-3xl">👨‍👩‍👧</div>
-                                <h2 className="text-2xl md:text-3xl font-semibold">Expecting & New Parents</h2>
+                                <h2 className="text-2xl md:text-3xl font-semibold">06 • Expecting &amp; New Parents</h2>
                             </div>
                             <div className="grid md:grid-cols-2 gap-6 text-sm">
                                 <div>Antenatal classes: <span className="font-semibold text-[#00a3e0]">2,000 once/year</span></div>
-                                <div>Well Baby Clinic visits: <span className="font-semibold text-[#00a3e0]">1,000</span></div>
-                                <div className="md:col-span-2 text-xs bg-amber-50 p-4 rounded-2xl">Expecting mothers earn <strong>DOUBLE</strong> points on fitness & HealthyFood purchases</div>
+                                <div>Well Baby Clinic visits: <span className="font-semibold text-[#00a3e0]">1,000 during pregnancy</span></div>
+                                <div>Tdap vaccine during pregnancy: <span className="font-semibold text-[#00a3e0]">500</span></div>
+                                <div className="md:col-span-2 text-xs bg-amber-50 p-4 rounded-2xl">Expecting mothers earn <strong>DOUBLE</strong> points on selected fitness activities and HealthyFood purchases (until baby is 6 months old)</div>
+                            </div>
+                        </div>
+
+                        {/* VACCINATIONS */}
+                        <div id="vaccinations" className="section-card bg-white rounded-3xl p-6 md:p-8 mb-8 md:mb-12">
+                            <div className="flex items-center gap-x-4 mb-6">
+                                <div className="w-11 h-11 bg-[#00a3e0] text-white rounded-2xl flex items-center justify-center text-3xl">💉</div>
+                                <h2 className="text-2xl md:text-3xl font-semibold">07 • Vaccinations for the Whole Family</h2>
+                            </div>
+                            <div className="grid md:grid-cols-2 gap-y-4 text-sm">
+                                <div className="flex justify-between"><span>Flu vaccination (6 months+)</span><span className="font-semibold text-[#00a3e0]">1,000 once/year (Mar–Sep)</span></div>
+                                <div className="flex justify-between"><span>HPV (9–14 yrs)</span><span className="font-semibold text-[#00a3e0]">1,000 once</span></div>
+                                <div className="flex justify-between"><span>HPV (15–26 yrs)</span><span className="font-semibold text-[#00a3e0]">1,000 once</span></div>
+                                <div className="flex justify-between"><span>Pneumococcal (65+)</span><span className="font-semibold text-[#00a3e0]">1,000 once</span></div>
+                                <div className="flex justify-between"><span>Shingles (60+)</span><span className="font-semibold text-[#00a3e0]">1,000 once</span></div>
+                                <div className="flex justify-between"><span>Childhood vaccinations</span><span className="font-semibold text-[#00a3e0]">500–2,000</span></div>
                             </div>
                         </div>
 
@@ -327,14 +348,14 @@
                         <div id="chronic" className="section-card bg-white rounded-3xl p-6 md:p-8">
                             <div className="flex items-center gap-x-4 mb-6">
                                 <div className="w-11 h-11 bg-[#00a3e0] text-white rounded-2xl flex items-center justify-center text-3xl">🩺</div>
-                                <h2 className="text-2xl md:text-3xl font-semibold">Managing Chronic Conditions</h2>
+                                <h2 className="text-2xl md:text-3xl font-semibold">08 • Managing Chronic Conditions</h2>
                             </div>
-                            <p className="text-lg">Registered on Chronic Illness Benefit</p>
+                            <p className="text-lg">Registered on Chronic Illness Benefit (diabetes, high blood pressure, hyperlipidaemia, ischemic heart disease)</p>
                             <p className="text-5xl font-bold text-[#00a3e0] mt-4">Up to 2,500 points per year</p>
                         </div>
 
                         <div className="text-center text-gray-400 text-xs mt-16 pb-12">
-                            All data from official Discovery Vitality Points & Partners PDF • DOB saved in localStorage
+                            All data cross-referenced from official Discovery Vitality Points &amp; Partners PDF • DOB saved automatically
                         </div>
                     </div>
                 </div>
