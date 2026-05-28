@@ -134,13 +134,13 @@
                                         <p className="text-blue-100 mt-2 text-sm md:text-base">Enter your date of birth for exact BPM ranges</p>
                                     </div>
                                     <div className="flex-1">
-                                        <input 
-                                            type="date" 
-                                            value={dob}
-                                            onChange={handleDOBChange}
-                                            className="w-full bg-white text-gray-900 rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-4 focus:ring-white/50"
-                                        />
-                                    </div>
+  <input 
+    type="date"
+    value={dob}
+    onChange={handleDOBChange}
+    className="max-w-xs bg-white text-gray-900 rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-4 focus:ring-white/50"
+  />
+</div>
                                 </div>
 
                                 {hasDOB && (
