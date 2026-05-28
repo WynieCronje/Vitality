@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Vitality Points Explorer • Discovery Vitality</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -31,7 +34,8 @@
             const [zones, setZones] = React.useState({
                 zone60_69: '60–69%',
                 zone70_79: '70–79%',
-                zone80plus: '80%+'
+                zone80plus: '80%+',
+                zone60plus: '60%+'
             });
 
             // Load DOB from localStorage
@@ -50,7 +54,8 @@
                     setZones({
                         zone60_69: '60–69%',
                         zone70_79: '70–79%',
-                        zone80plus: '80%+'
+                        zone80plus: '80%+',
+                        zone60plus: '60%+'
                     });
                     return;
                 }
@@ -76,7 +81,8 @@
                 setZones({
                     zone60_69: `${z60}–${z69} BPM`,
                     zone70_79: `${z70}–${z79} BPM`,
-                    zone80plus: `≥${z80} BPM`
+                    zone80plus: `≥${z80} BPM`,
+                    zone60plus: `≥${z60} BPM`
                 });
 
                 localStorage.setItem('vitalityDOB', dobInput);
@@ -172,7 +178,7 @@
                                 <i className="fa-solid fa-running text-[#00a3e0]"></i>
                                 Fitness Points
                             </h2>
-                            <p className="text-gray-600 mb-8">Best activity of the day wins. Tables update with your zones.</p>
+                            <p className="text-gray-600 mb-8">Best activity of the day wins. All percentages update with your personal zones.</p>
 
                             {/* 18–64 Table */}
                             <h3 className="font-semibold text-xl mb-4 mt-8">Ages 18–64</h3>
@@ -191,10 +197,10 @@
                                         <tr><td className="px-6 py-4">10,000+ steps</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
                                         <tr><td className="px-6 py-4">30–59 min @ {zones.zone60_69}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
                                         <tr><td className="px-6 py-4">60–89 min @ {zones.zone60_69}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">200</td></tr>
-                                        <tr><td className="px-6 py-4">90+ min @ 60%+</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">300</td></tr>
+                                        <tr><td className="px-6 py-4">90+ min @ {zones.zone60plus}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">300</td></tr>
                                         <tr><td className="px-6 py-4">15–29 min @ {zones.zone70_79}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
                                         <tr><td className="px-6 py-4">30–59 min @ {zones.zone70_79}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">200</td></tr>
-                                        <tr><td className="px-6 py-4">60+ min @ 70%+</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">300</td></tr>
+                                        <tr><td className="px-6 py-4">60+ min @ {zones.zone70_79}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">300</td></tr>
                                         <tr><td className="px-6 py-4">30+ min @ {zones.zone80plus}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">300</td></tr>
                                     </tbody>
                                 </table>
@@ -232,7 +238,6 @@
             );
         }
 
-        // Render the app
         ReactDOM.render(
             React.createElement(App),
             document.getElementById('root')
