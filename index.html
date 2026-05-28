@@ -4,468 +4,239 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vitality Points Explorer • Discovery Vitality</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap');
-        :root {
-            --discovery-blue: #00a3e0;
-        }
-        body {
-            font-family: 'Inter', system_ui, sans-serif;
-        }
-        .header-bg {
-            background: linear-gradient(90deg, #00a3e0, #0077b6);
-        }
-        .nav-link {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .nav-link:hover {
-            transform: translateY(-1px);
-            color: #00a3e0;
-        }
-        .section-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .section-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        }
-        .hr-bar {
-            height: 8px;
-            background: linear-gradient(to right, #22c55e 33%, #eab308 33%, #eab308 66%, #ef4444 66%);
-            border-radius: 9999px;
-            position: relative;
-        }
-        table {
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        tr:last-child td {
-            border-bottom: none;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .header-bg { background: linear-gradient(90deg, #00a3e0, #0077b6); }
+        .section-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .section-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-    <!-- HEADER -->
-    <div class="header-bg text-white">
-        <div class="max-w-7xl mx-auto px-6 py-8">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-x-3">
-                    <i class="fa-solid fa-heart-pulse text-4xl"></i>
-                    <div>
-                        <h1 class="text-4xl font-semibold tracking-tight">Vitality Points Explorer</h1>
-                        <p class="text-blue-100 text-lg">Discover every way to earn Discovery Vitality points • Based on official Points &amp; Partners guide</p>
-                    </div>
-                </div>
-                <a href="https://www.discovery.co.za/assets/discoverycoza/vitality/how-to-join/points-and-partners.pdf" 
-                   target="_blank"
-                   class="flex items-center gap-x-2 bg-white text-[#00a3e0] px-6 py-3 rounded-2xl font-semibold hover:bg-blue-50 transition-colors">
-                    <i class="fa-solid fa-file-pdf"></i>
-                    <span>View original PDF</span>
-                </a>
-            </div>
-            
-            <!-- Quick DOB Calculator -->
-            <div class="mt-10 bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20">
-                <div class="flex flex-col md:flex-row items-start md:items-center gap-8">
-                    <div class="flex-1">
-                        <h2 class="text-2xl font-semibold mb-2 flex items-center gap-x-2">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            Your Personal Heart Rate Zones
-                        </h2>
-                        <p class="text-blue-100">Enter your date of birth to calculate your maximum heart rate (220 − age) and see exact BPM ranges for earning fitness points.</p>
-                    </div>
-                    
-                    <div class="flex-1 w-full">
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <div class="flex-1">
-                                <label class="block text-sm font-medium text-blue-100 mb-1">Date of Birth</label>
-                                <input type="date" id="dob-input" 
-                                       class="w-full bg-white text-gray-900 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-white text-lg">
-                            </div>
-                            <div class="flex items-end">
-                                <button onclick="calculateHeartRate()" 
-                                        class="bg-white text-[#00a3e0] hover:bg-blue-50 font-semibold px-10 py-4 rounded-2xl flex items-center gap-x-3 transition-all active:scale-95">
-                                    <i class="fa-solid fa-calculator"></i>
-                                    CALCULATE ZONES
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Results -->
-                <div id="hr-results" class="hidden mt-8 bg-white rounded-3xl p-6 text-gray-900 shadow-xl">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div>
-                            <p class="text-sm text-gray-500">Your age</p>
-                            <p id="age-display" class="text-6xl font-semibold text-[#00a3e0]"></p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">Maximum heart rate</p>
-                            <p id="maxhr-display" class="text-6xl font-semibold"></p>
-                        </div>
-                        <div class="text-sm">
-                            <p class="font-medium mb-3">Heart rate zones for points</p>
-                            <div id="zones-list" class="space-y-4"></div>
-                        </div>
-                    </div>
-                    <div class="mt-6 text-xs text-gray-500 flex items-center gap-x-2">
-                        <i class="fa-solid fa-info-circle"></i>
-                        Formula: 220 − age • Used for all 60%–80%+ zones in the fitness points tables below
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<body class="bg-gray-50">
 
-    <div class="max-w-7xl mx-auto px-6 py-10">
-        <!-- NAVIGATION PILLS -->
-        <div class="flex flex-wrap gap-3 mb-12 border-b pb-6">
-            <a onclick="scrollToSection('health-check')" class="nav-link cursor-pointer flex items-center gap-x-2 bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-3 rounded-3xl text-sm font-medium">
-                <i class="fa-solid fa-clipboard-check"></i> Health Check &amp; Assessments
-            </a>
-            <a onclick="scrollToSection('screenings')" class="nav-link cursor-pointer flex items-center gap-x-2 bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-3 rounded-3xl text-sm font-medium">
-                <i class="fa-solid fa-stethoscope"></i> Additional Screenings
-            </a>
-            <a onclick="scrollToSection('fitness')" class="nav-link cursor-pointer flex items-center gap-x-2 bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-3 rounded-3xl text-sm font-medium">
-                <i class="fa-solid fa-running"></i> Get Active – Fitness Points
-            </a>
-            <a onclick="scrollToSection('eating')" class="nav-link cursor-pointer flex items-center gap-x-2 bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-3 rounded-3xl text-sm font-medium">
-                <i class="fa-solid fa-apple-whole"></i> Eat Healthy
-            </a>
-            <a onclick="scrollToSection('family')" class="nav-link cursor-pointer flex items-center gap-x-2 bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-3 rounded-3xl text-sm font-medium">
-                <i class="fa-solid fa-baby"></i> Expecting &amp; New Parents
-            </a>
-            <a onclick="scrollToSection('vaccinations')" class="nav-link cursor-pointer flex items-center gap-x-2 bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-3 rounded-3xl text-sm font-medium">
-                <i class="fa-solid fa-syringe"></i> Vaccinations
-            </a>
-            <a onclick="scrollToSection('chronic')" class="nav-link cursor-pointer flex items-center gap-x-2 bg-white shadow-sm border border-gray-200 hover:border-[#00a3e0] px-5 py-3 rounded-3xl text-sm font-medium">
-                <i class="fa-solid fa-heart"></i> Chronic Conditions
-            </a>
-        </div>
+    <div id="root"></div>
 
-        <!-- SECTION 1: ONLINE ASSESSMENTS & HEALTH CHECK -->
-        <div id="health-check" class="section-card bg-white rounded-3xl p-8 mb-12 shadow-sm">
-            <div class="flex items-center gap-x-4 mb-6">
-                <div class="w-10 h-10 bg-[#00a3e0] text-white rounded-2xl flex items-center justify-center text-2xl">📋</div>
-                <div>
-                    <h2 class="text-3xl font-semibold">01 • Online Assessments &amp; Vitality Health Check</h2>
-                    <p class="text-gray-500">Maximum 25,000 points per year for members 18+</p>
-                </div>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="font-semibold text-xl mb-4">Online Assessments</h3>
-                    <ul class="space-y-4">
-                        <li class="flex justify-between items-center bg-gray-50 p-4 rounded-2xl"><span class="flex items-center gap-x-3"><i class="fa-solid fa-check text-green-500"></i> Vitality Age</span><span class="font-semibold text-[#00a3e0]">1,500 points once a year</span></li>
-                        <li class="flex justify-between items-center bg-gray-50 p-4 rounded-2xl"><span class="flex items-center gap-x-3"><i class="fa-solid fa-check text-green-500"></i> Complete Mental Wellbeing Assessments</span><span class="font-semibold text-[#00a3e0]">500 points, twice a year (6 months apart = 1,000 total)</span></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="font-semibold text-xl mb-4">Vitality Health Check Points (5 measures)</h3>
-                    <table class="w-full">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th>In-range results</th>
-                                <th>0 high-risk results</th>
-                                <th>1 or more high-risk results</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm">
-                            <tr><td class="font-medium">5</td><td class="font-semibold text-[#00a3e0]">22,500</td><td class="text-gray-400">—</td></tr>
-                            <tr><td class="font-medium">4</td><td class="font-semibold text-[#00a3e0]">15,000</td><td class="font-semibold text-[#00a3e0]">5,000</td></tr>
-                            <tr><td class="font-medium">3</td><td class="font-semibold text-[#00a3e0]">10,000</td><td class="font-semibold text-[#00a3e0]">5,000</td></tr>
-                            <tr><td class="font-medium">2</td><td class="font-semibold text-[#00a3e0]">7,500</td><td class="font-semibold text-[#00a3e0]">5,000</td></tr>
-                            <tr><td class="font-medium">1</td><td class="font-semibold text-[#00a3e0]">5,000</td><td class="font-semibold text-[#00a3e0]">5,000</td></tr>
-                        </tbody>
-                    </table>
-                    <p class="text-xs text-gray-500 mt-4">Partial check: 4 results in range = 5,000 • 3 results = 2,500 • Fewer than 3 = 0 points</p>
-                </div>
-            </div>
-        </div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-        <!-- SECTION 2: ADDITIONAL SCREENINGS -->
-        <div id="screenings" class="section-card bg-white rounded-3xl p-8 mb-12 shadow-sm">
-            <div class="flex items-center gap-x-4 mb-6">
-                <div class="w-10 h-10 bg-[#00a3e0] text-white rounded-2xl flex items-center justify-center text-2xl">🔬</div>
-                <h2 class="text-3xl font-semibold">03 • Additional Screenings (age &amp; gender specific)</h2>
-            </div>
-            <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 text-sm">
-                <div class="flex justify-between"><span>Colon cancer screening (45+)</span><span class="font-semibold">2,500 once a year</span></div>
-                <div class="flex justify-between"><span>Bone mass density test (women 65+, men 70+)</span><span class="font-semibold">2,500 once a year</span></div>
-                <div class="flex justify-between"><span>Dental check-up</span><span class="font-semibold">1,000 once a year</span></div>
-                <div class="flex justify-between"><span>Mammogram (women 40+)</span><span class="font-semibold">2,500 once a year (carries over)</span></div>
-                <div class="flex justify-between"><span>Pap smear / HPV test (women 25–65)</span><span class="font-semibold">2,500 once a year (carries over)</span></div>
-                <div class="flex justify-between"><span>Glaucoma / vision test (60+)</span><span class="font-semibold">1,000 once a year</span></div>
-                <div class="flex justify-between"><span>Hearing test</span><span class="font-semibold">1,000 once in a lifetime</span></div>
-                <div class="flex justify-between"><span>Tdap vaccine (65+)</span><span class="font-semibold">Up to 3,500 once a year</span></div>
-                <div class="flex justify-between"><span>Optometrist (65+ members)</span><span class="font-semibold">Up to 2,500 once a year</span></div>
-                <div class="flex justify-between"><span>First HIV test</span><span class="font-semibold">7,500 once in a lifetime</span></div>
-                <div class="flex justify-between"><span>HIV counselling &amp; testing (18+)</span><span class="font-semibold">1,000 once a year</span></div>
-                <div class="flex justify-between"><span>Premier PLUS GP consult (65+)</span><span class="font-semibold">Up to 3,500 once a year</span></div>
-            </div>
-        </div>
+        function App() {
+            const [dob, setDob] = React.useState('');
+            const [age, setAge] = React.useState(null);
+            const [maxHR, setMaxHR] = React.useState(null);
+            const [zones, setZones] = React.useState({
+                zone60_69: '60–69%',
+                zone70_79: '70–79%',
+                zone80plus: '80%+'
+            });
 
-        <!-- SECTION 3: FITNESS – THE INTERACTIVE HEART -->
-        <div id="fitness" class="section-card bg-white rounded-3xl p-8 mb-12 shadow-sm">
-            <div class="flex items-center gap-x-4 mb-6">
-                <div class="w-10 h-10 bg-[#00a3e0] text-white rounded-2xl flex items-center justify-center text-2xl">🏃</div>
-                <h2 class="text-3xl font-semibold">04 • Earn Points for Getting Active</h2>
-            </div>
-            <p class="mb-8 text-gray-600">Up to 10,000 Cardio Fitness Level points (separate) + fitness activity points. Points awarded for only one activity per day (highest wins).</p>
-            
-            <!-- Cardio Fitness Level -->
-            <div class="mb-10 p-6 bg-gradient-to-r from-emerald-50 to-sky-50 rounded-3xl">
-                <h3 class="font-semibold mb-2">Vitality Cardio Fitness Level (VO₂ max)</h3>
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                    <div class="text-center"><div class="text-4xl font-semibold text-emerald-600">Superior</div><div class="text-xs text-emerald-600">10,000 points</div></div>
-                    <div class="text-center"><div class="text-4xl font-semibold text-sky-600">Excellent</div><div class="text-xs text-sky-600">7,000 points</div></div>
-                    <div class="text-center"><div class="text-4xl font-semibold text-amber-600">Good</div><div class="text-xs text-amber-600">4,500 points</div></div>
-                    <div class="text-center"><div class="text-4xl font-semibold text-orange-600">Fair</div><div class="text-xs text-orange-600">2,500 points</div></div>
-                    <div class="text-center"><div class="text-4xl font-semibold text-red-500">Low</div><div class="text-xs text-red-500">1,000 points</div></div>
-                </div>
-                <p class="text-xs mt-4">Requires 5 device readings or one Vitality Fitness Assessment.</p>
-            </div>
-            
-            <!-- HR Zones Reminder (already calculated above) -->
-            <div class="mb-8 p-5 border border-dashed border-[#00a3e0] rounded-3xl">
-                <p class="font-medium mb-1">💡 Need exact BPM ranges? Use the calculator at the top of the page.</p>
-                <p class="text-sm text-gray-600">Maximum heart rate = 220 − your age • Zones: 60–69%, 70–79%, 80%+</p>
-            </div>
-            
-            <!-- Fitness Points Tables -->
-            <h3 class="font-semibold text-xl mb-4">Fitness Points – Ages 18–64</h3>
-            <div class="overflow-x-auto mb-12">
-                <table class="w-full min-w-[700px]">
-                    <thead class="bg-gray-100 text-xs uppercase tracking-widest">
-                        <tr>
-                            <th>Activity</th>
-                            <th class="text-right">Points</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-sm divide-y">
-                        <tr><td>Vitality online workout – 30+ min</td><td class="text-right font-semibold text-[#00a3e0]">50</td></tr>
-                        <tr><td>Vitality Anywhere – 30+ min</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                        <tr><td>Gym workout – 30+ min</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                        <tr><td>5,000–9,999 steps</td><td class="text-right font-semibold text-[#00a3e0]">50</td></tr>
-                        <tr><td>10,000+ steps</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                        <tr><td>parkrun</td><td class="text-right font-semibold text-[#00a3e0]">300</td></tr>
-                        <tr><td>30+ min speed workout*</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                        <tr><td>30–59 min @ 60–69% max HR*</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                        <tr><td>60–89 min @ 60–69% max HR*</td><td class="text-right font-semibold text-[#00a3e0]">200</td></tr>
-                        <tr><td>90+ min @ 60%+ max HR*</td><td class="text-right font-semibold text-[#00a3e0]">300</td></tr>
-                        <tr><td>15–29 min @ 70%+ max HR*</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                        <tr><td>30–59 min @ 70–79% max HR</td><td class="text-right font-semibold text-[#00a3e0]">200</td></tr>
-                        <tr><td>60+ min @ 70%+ max HR</td><td class="text-right font-semibold text-[#00a3e0]">300</td></tr>
-                        <tr><td>30+ min @ 80%+ max HR</td><td class="text-right font-semibold text-[#00a3e0]">300</td></tr>
-                        <tr><td>Handicaps Network Africa</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <h3 class="font-semibold text-xl mb-4">Fitness Points – Ages 65+</h3>
-            <div class="overflow-x-auto mb-12">
-                <table class="w-full min-w-[700px]">
-                    <thead class="bg-gray-100 text-xs uppercase tracking-widest">
-                        <tr>
-                            <th>Activity</th>
-                            <th class="text-right">Points</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-sm divide-y">
-                        <tr><td>Vitality online workout – 30+ min</td><td class="text-right font-semibold text-[#00a3e0]">50</td></tr>
-                        <tr><td>Vitality Anywhere – 30+ min</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                        <tr><td>Gym workout – 30+ min</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                        <tr><td>5,000–7,499 steps</td><td class="text-right font-semibold text-[#00a3e0]">50</td></tr>
-                        <tr><td>7,500+ steps</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                        <tr><td>parkrun</td><td class="text-right font-semibold text-[#00a3e0]">300</td></tr>
-                        <tr><td>30+ min speed workout</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                        <tr><td>30–59 min @ 60–69% max HR</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                        <tr><td>60–89 min @ 60–69% max HR</td><td class="text-right font-semibold text-[#00a3e0]">200</td></tr>
-                        <tr><td>90+ min @ 60%+ max HR</td><td class="text-right font-semibold text-[#00a3e0]">300</td></tr>
-                        <tr><td>15–29 min @ 70%+ max HR</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                        <tr><td>30+ min @ 70%+ max HR</td><td class="text-right font-semibold text-[#00a3e0]">300</td></tr>
-                        <tr><td>Handicaps Network Africa</td><td class="text-right font-semibold text-[#00a3e0]">100</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <h3 class="font-semibold text-xl mb-4">Endurance &amp; High-Performance Athletes (extra points)</h3>
-            <table class="w-full text-sm">
-                <thead class="bg-gray-100">
-                    <tr><th>Duration &amp; intensity</th><th class="text-right">Points</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>90–119 min @ 60–69%</td><td class="text-right">300</td></tr>
-                    <tr><td>120–179 min @ 60–69%</td><td class="text-right">450</td></tr>
-                    <tr><td>180+ min @ 60%+</td><td class="text-right">600</td></tr>
-                    <tr><td>90–119 min @ 70%+</td><td class="text-right">450</td></tr>
-                    <tr><td>120+ min @ 70%+</td><td class="text-right">600</td></tr>
-                </tbody>
-            </table>
-            
-            <div class="mt-8 text-xs bg-amber-50 border border-amber-200 rounded-2xl p-5">
-                <strong>Caps apply:</strong> Online/speed workouts capped at 1,000 points/year towards status.<br>
-                Steps capped at 1,200 points/month towards status.<br>
-                <strong>Speed workout definition:</strong> Run ≥5.5 km/h • Swim ≥1.5 km/h • Cycle ≥10 km/h
-            </div>
-            
-            <!-- Timed & Verified Race Events -->
-            <h3 class="font-semibold text-xl mt-12 mb-4">Timed &amp; Verified Race Events</h3>
-            <p class="text-xs mb-4">Upload certificate via app or website</p>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
-                <div>5–9 km run/walk: <span class="font-semibold">300 pts</span></div>
-                <div>10–20 km: <span class="font-semibold">600 pts</span></div>
-                <div>21–41 km: <span class="font-semibold">1,500 pts</span></div>
-                <div>42 km+: <span class="font-semibold">3,000 pts</span></div>
-                <!-- Additional sports abbreviated for space; full details in PDF -->
-                <div class="text-[#00a3e0] text-xs col-span-full mt-2">Full points also for swimming, cycling, trail, obstacle, mountain bike, canoe, paddle board &amp; surfski events (up to 9,000 pts for full Ironman)</div>
-            </div>
-        </div>
+            // Load DOB from localStorage
+            useEffect(() => {
+                const saved = localStorage.getItem('vitalityDOB');
+                if (saved) {
+                    setDob(saved);
+                    calculateHR(saved);
+                }
+            }, []);
 
-        <!-- SECTION 4: EAT HEALTHY -->
-        <div id="eating" class="section-card bg-white rounded-3xl p-8 mb-12 shadow-sm">
-            <div class="flex items-center gap-x-4 mb-6">
-                <div class="w-10 h-10 bg-[#00a3e0] text-white rounded-2xl flex items-center justify-center text-2xl">🥗</div>
-                <h2 class="text-3xl font-semibold">05 • Choose to Eat Healthy</h2>
-            </div>
-            <div class="flex flex-col md:flex-row gap-8 items-center">
-                <div class="flex-1">
-                    <div class="flex items-center justify-between bg-emerald-50 rounded-3xl px-8 py-6">
-                        <div class="text-center">
-                            <div class="text-5xl font-bold text-emerald-600">+20</div>
-                            <div class="text-emerald-700">per HealthyFood item</div>
-                        </div>
-                        <div class="text-6xl text-gray-300">→</div>
-                        <div class="text-center">
-                            <div class="text-5xl font-bold text-red-500">−20</div>
-                            <div class="text-red-700">per unhealthy item</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex-1 space-y-6">
-                    <div class="flex justify-between items-center">
-                        <span class="font-medium">Learn more about eating habits at a dietitian</span>
-                        <span class="font-semibold text-[#00a3e0]">Up to 1,000 points</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="font-medium">HealthyWeight nutrition consultation</span>
-                        <span class="font-semibold text-[#00a3e0]">1,000 points</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="font-medium">Check-in after 4 weeks of HealthyWeight programme</span>
-                        <span class="font-semibold text-[#00a3e0]">Additional points</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+            function calculateHR(dobInput) {
+                if (!dobInput) {
+                    setAge(null);
+                    setMaxHR(null);
+                    setZones({
+                        zone60_69: '60–69%',
+                        zone70_79: '70–79%',
+                        zone80plus: '80%+'
+                    });
+                    return;
+                }
 
-        <!-- SECTION 5 & 6: FAMILY / EXPECTING / VACCINATIONS -->
-        <div class="grid md:grid-cols-2 gap-8 mb-12">
-            <div id="family" class="section-card bg-white rounded-3xl p-8 shadow-sm">
-                <h2 class="text-3xl font-semibold mb-6 flex items-center gap-x-3"><i class="fa-solid fa-baby-carriage"></i> 06 • Expecting &amp; New Parents</h2>
-                <ul class="space-y-4 text-sm">
-                    <li class="flex justify-between"><span>Antenatal classes</span><span class="font-semibold">2,000 once a year</span></li>
-                    <li class="flex justify-between"><span>Well Baby Clinic visits (Clicks / Dis-Chem)</span><span class="font-semibold">1,000 during pregnancy</span></li>
-                    <li class="flex justify-between"><span>Tdap vaccine during pregnancy</span><span class="font-semibold">500 per event</span></li>
-                    <li class="text-xs bg-amber-50 p-3 rounded-2xl">Expecting mothers earn <strong>DOUBLE</strong> points for selected fitness activities + HealthyFood purchases (pregnancy until baby is 6 months old)</li>
-                </ul>
-            </div>
-            
-            <div id="vaccinations" class="section-card bg-white rounded-3xl p-8 shadow-sm">
-                <h2 class="text-3xl font-semibold mb-6 flex items-center gap-x-3"><i class="fa-solid fa-syringe"></i> 07 • Vaccinations for the Whole Family</h2>
-                <div class="space-y-4 text-sm">
-                    <div class="flex justify-between"><span>Flu vaccination (6 months+)</span><span class="font-semibold">1,000 once a year (Mar–Sep)</span></div>
-                    <div class="flex justify-between"><span>HPV (9–14 yrs: 2 doses)</span><span class="font-semibold">1,000 once in lifetime</span></div>
-                    <div class="flex justify-between"><span>HPV (15–26 yrs: 3 doses)</span><span class="font-semibold">1,000 once in lifetime</span></div>
-                    <div class="flex justify-between"><span>Pneumococcal (65+)</span><span class="font-semibold">1,000 once in lifetime</span></div>
-                    <div class="flex justify-between"><span>Shingles (60+)</span><span class="font-semibold">1,000 once in lifetime</span></div>
-                    <div class="flex justify-between"><span>Childhood vaccinations (under 2 &amp; 4–7 yrs)</span><span class="font-semibold">500–2,000 points</span></div>
-                </div>
-            </div>
-        </div>
+                const dobDate = new Date(dobInput);
+                const today = new Date();
+                let calculatedAge = today.getFullYear() - dobDate.getFullYear();
+                if (today.getMonth() < dobDate.getMonth() || 
+                    (today.getMonth() === dobDate.getMonth() && today.getDate() < dobDate.getDate())) {
+                    calculatedAge--;
+                }
 
-        <!-- SECTION 8: CHRONIC CONDITIONS -->
-        <div id="chronic" class="section-card bg-white rounded-3xl p-8 mb-12 shadow-sm">
-            <div class="flex items-center gap-x-4 mb-6">
-                <div class="w-10 h-10 bg-[#00a3e0] text-white rounded-2xl flex items-center justify-center text-2xl">🩺</div>
-                <h2 class="text-3xl font-semibold">08 • Managing Chronic Conditions</h2>
-            </div>
-            <p class="text-lg">Registered on Chronic Illness Benefit (diabetes, hyperlipidaemia, high blood pressure, ischemic heart disease)</p>
-            <p class="font-semibold text-4xl text-[#00a3e0] mt-4">Up to 2,500 points per year</p>
-        </div>
+                const calculatedMaxHR = Math.round(220 - calculatedAge);
 
-        <!-- FOOTER / STATUS NOTE -->
-        <div class="text-center text-gray-400 text-sm py-8 border-t">
-            Vitality status (Blue → Bronze → Silver → Gold → Platinum) is earned by accumulating points across all categories above.<br>
-            Full status thresholds are listed in the original PDF. Points contribute to your overall Vitality level and Active Rewards goals.<br>
-            <span class="text-[#00a3e0] font-medium">All data extracted directly from the official Discovery Vitality Points &amp; Partners PDF (2026 edition).</span>
-        </div>
-    </div>
+                const z60 = Math.round(calculatedMaxHR * 0.60);
+                const z69 = Math.round(calculatedMaxHR * 0.69);
+                const z70 = Math.round(calculatedMaxHR * 0.70);
+                const z79 = Math.round(calculatedMaxHR * 0.79);
+                const z80 = Math.round(calculatedMaxHR * 0.80);
 
-    <script>
-        function calculateHeartRate() {
-            const dobInput = document.getElementById('dob-input').value;
-            if (!dobInput) {
-                alert("Please enter your date of birth");
-                return;
+                setAge(calculatedAge);
+                setMaxHR(calculatedMaxHR);
+                setZones({
+                    zone60_69: `${z60}–${z69} BPM`,
+                    zone70_79: `${z70}–${z79} BPM`,
+                    zone80plus: `≥${z80} BPM`
+                });
+
+                localStorage.setItem('vitalityDOB', dobInput);
             }
-            
-            const dob = new Date(dobInput);
-            const today = new Date();
-            let age = today.getFullYear() - dob.getFullYear();
-            const monthDiff = today.getMonth() - dob.getMonth();
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) age--;
-            
-            const maxHR = Math.round(220 - age);
-            
-            // Display results
-            document.getElementById('hr-results').classList.remove('hidden');
-            document.getElementById('age-display').innerHTML = `${age} <span class="text-xl font-normal text-gray-400">years</span>`;
-            document.getElementById('maxhr-display').innerHTML = `${maxHR} <span class="text-base font-medium text-gray-400">BPM</span>`;
-            
-            // Generate zones
-            const zonesContainer = document.getElementById('zones-list');
-            zonesContainer.innerHTML = `
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center gap-x-2">
-                        <span class="inline-block w-3 h-3 bg-green-500 rounded-full"></span>
-                        <span>60–69% (endurance)</span>
+
+            function handleDOBChange(e) {
+                const newDob = e.target.value;
+                setDob(newDob);
+                calculateHR(newDob);
+            }
+
+            const hasDOB = !!maxHR;
+
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    {/* HEADER */}
+                    <div className="header-bg text-white pb-12">
+                        <div className="max-w-7xl mx-auto px-6 pt-8">
+                            <div className="flex justify-between items-start">
+                                <div className="flex items-center gap-x-4">
+                                    <i className="fa-solid fa-heart-pulse text-5xl"></i>
+                                    <div>
+                                        <h1 className="text-4xl font-semibold tracking-tight">Vitality Points Explorer</h1>
+                                        <p className="text-blue-100 mt-1">Discovery Vitality • All ways to earn points</p>
+                                    </div>
+                                </div>
+                                <a 
+                                    href="https://www.discovery.co.za/assets/discoverycoza/vitality/how-to-join/points-and-partners.pdf"
+                                    target="_blank"
+                                    className="flex items-center gap-x-2 bg-white/90 text-[#00a3e0] px-6 py-3 rounded-2xl font-semibold hover:bg-white"
+                                >
+                                    <i className="fa-solid fa-file-pdf"></i>
+                                    View PDF
+                                </a>
+                            </div>
+
+                            {/* DOB Section */}
+                            <div className="mt-10 bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/30">
+                                <div className="flex flex-col lg:flex-row gap-8">
+                                    <div className="flex-1">
+                                        <h2 className="text-2xl font-semibold">Personal Heart Rate Zones</h2>
+                                        <p className="text-blue-100 mt-2">Enter your date of birth for exact BPM ranges</p>
+                                    </div>
+                                    <div className="flex-1">
+                                        <input 
+                                            type="date" 
+                                            value={dob}
+                                            onChange={handleDOBChange}
+                                            className="w-full bg-white text-gray-900 rounded-2xl px-6 py-4 text-lg focus:outline-none focus:ring-4 focus:ring-white/50"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* HR Results */}
+                                {hasDOB && (
+                                    <div className="mt-8 bg-white rounded-3xl p-8 text-gray-900">
+                                        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-center">
+                                            <div>
+                                                <div className="text-sm text-gray-500">AGE</div>
+                                                <div className="text-6xl font-bold text-[#00a3e0]">{age}</div>
+                                            </div>
+                                            <div>
+                                                <div className="text-sm text-gray-500">MAX HR</div>
+                                                <div className="text-6xl font-bold">{maxHR} BPM</div>
+                                            </div>
+                                            <div className="md:col-span-2">
+                                                <div className="text-sm font-medium mb-3">YOUR ZONES</div>
+                                                <div className="grid grid-cols-3 gap-4">
+                                                    <div className="text-center bg-green-50 rounded-2xl py-4">
+                                                        <div className="text-green-600 text-xs font-medium">60–69%</div>
+                                                        <div className="font-mono text-xl font-semibold">{zones.zone60_69}</div>
+                                                    </div>
+                                                    <div className="text-center bg-yellow-50 rounded-2xl py-4">
+                                                        <div className="text-yellow-600 text-xs font-medium">70–79%</div>
+                                                        <div className="font-mono text-xl font-semibold">{zones.zone70_79}</div>
+                                                    </div>
+                                                    <div className="text-center bg-orange-50 rounded-2xl py-4">
+                                                        <div className="text-orange-600 text-xs font-medium">80%+</div>
+                                                        <div className="font-mono text-xl font-semibold">{zones.zone80plus}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
-                    <div class="font-mono text-lg">${Math.round(maxHR * 0.60)} – ${Math.round(maxHR * 0.69)} BPM</div>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center gap-x-2">
-                        <span class="inline-block w-3 h-3 bg-yellow-500 rounded-full"></span>
-                        <span>70–79%</span>
+
+                    <div className="max-w-7xl mx-auto px-6 py-12">
+                        <div className="section-card bg-white rounded-3xl p-8 shadow-sm">
+                            <h2 className="text-3xl font-semibold flex items-center gap-x-3 mb-2">
+                                <i className="fa-solid fa-running text-[#00a3e0]"></i>
+                                Fitness Points
+                            </h2>
+                            <p className="text-gray-600 mb-8">Best activity of the day wins. Tables update with your zones.</p>
+
+                            {/* 18–64 Table */}
+                            <h3 className="font-semibold text-xl mb-4 mt-8">Ages 18–64</h3>
+                            <div className="overflow-x-auto rounded-2xl border">
+                                <table className="w-full text-sm">
+                                    <thead className="bg-gray-100">
+                                        <tr>
+                                            <th className="text-left px-6 py-4">Activity</th>
+                                            <th className="text-right px-6 py-4">Points</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y">
+                                        <tr><td className="px-6 py-4">Vitality online workout (30+ min)</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">50</td></tr>
+                                        <tr><td className="px-6 py-4">Vitality Anywhere (30+ min)</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">Gym workout (30+ min)</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">10,000+ steps</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">30–59 min @ {zones.zone60_69}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">60–89 min @ {zones.zone60_69}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">200</td></tr>
+                                        <tr><td className="px-6 py-4">90+ min @ 60%+</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">300</td></tr>
+                                        <tr><td className="px-6 py-4">15–29 min @ {zones.zone70_79}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">30–59 min @ {zones.zone70_79}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">200</td></tr>
+                                        <tr><td className="px-6 py-4">60+ min @ 70%+</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">300</td></tr>
+                                        <tr><td className="px-6 py-4">30+ min @ {zones.zone80plus}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">300</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {/* 65+ Table */}
+                            <h3 className="font-semibold text-xl mb-4 mt-12">Ages 65+</h3>
+                            <div className="overflow-x-auto rounded-2xl border">
+                                <table className="w-full text-sm">
+                                    <thead className="bg-gray-100">
+                                        <tr>
+                                            <th className="text-left px-6 py-4">Activity</th>
+                                            <th className="text-right px-6 py-4">Points</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y">
+                                        <tr><td className="px-6 py-4">Vitality online workout (30+ min)</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">50</td></tr>
+                                        <tr><td className="px-6 py-4">Vitality Anywhere (30+ min)</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">Gym workout (30+ min)</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">7,500+ steps</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">30–59 min @ {zones.zone60_69}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">60–89 min @ {zones.zone60_69}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">200</td></tr>
+                                        <tr><td className="px-6 py-4">15–29 min @ {zones.zone70_79}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">100</td></tr>
+                                        <tr><td className="px-6 py-4">30+ min @ {zones.zone70_79}</td><td className="text-right px-6 py-4 font-semibold text-[#00a3e0]">300</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div className="text-center text-gray-400 text-xs mt-16">
+                            All data from official Discovery Vitality Points &amp; Partners PDF • DOB saved in browser
+                        </div>
                     </div>
-                    <div class="font-mono text-lg">${Math.round(maxHR * 0.70)} – ${Math.round(maxHR * 0.79)} BPM</div>
                 </div>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center gap-x-2">
-                        <span class="inline-block w-3 h-3 bg-orange-500 rounded-full"></span>
-                        <span>80%+</span>
-                    </div>
-                    <div class="font-mono text-lg">${Math.round(maxHR * 0.80)} – ${maxHR} BPM</div>
-                </div>
-                <div class="text-xs text-gray-500 mt-4">These exact ranges unlock 100–300 points per qualifying workout.</div>
-            `;
+            );
         }
-        
-        function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Tailwind script already loaded
-        console.log('%c✅ Vitality Points Explorer ready! All PDF data incorporated.', 'color:#00a3e0; font-weight:600');
+
+        // Render the app
+        ReactDOM.render(
+            React.createElement(App),
+            document.getElementById('root')
+        );
     </script>
 </body>
 </html>
