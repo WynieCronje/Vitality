@@ -21,8 +21,9 @@
         body { font-family: 'Inter', system_ui, sans-serif; }
         .header-bg { background: linear-gradient(90deg, #00a3e0, #0077b6); }
         .section-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .section-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
+        .section-card:hover { box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
         table { border-collapse: collapse; }
+        table tr:nth-child(even) { background-color: #fafafa; }
         .nav-pill { transition: all 0.2s; }
     </style>
 </head>
@@ -334,7 +335,7 @@
                                 <div className="w-11 h-11 bg-[#00a3e0] text-white rounded-2xl flex items-center justify-center text-3xl">💉</div>
                                 <h2 className="text-2xl md:text-3xl font-semibold">07 • Vaccinations for the Whole Family</h2>
                             </div>
-                            <div className="grid md:grid-cols-2 gap-y-4 text-sm">
+                            <div className="grid md:grid-cols-2 gap-y-4 gap-x-4 text-sm">
                                 <div className="flex justify-between"><span>Flu vaccination (6 months+)</span><span className="font-semibold text-[#00a3e0]">1,000 once/year (Mar–Sep)</span></div>
                                 <div className="flex justify-between"><span>HPV (9–14 yrs)</span><span className="font-semibold text-[#00a3e0]">1,000 once</span></div>
                                 <div className="flex justify-between"><span>HPV (15–26 yrs)</span><span className="font-semibold text-[#00a3e0]">1,000 once</span></div>
@@ -351,7 +352,7 @@
                                 <h2 className="text-2xl md:text-3xl font-semibold">08 • Managing Chronic Conditions</h2>
                             </div>
                             <p className="text-lg">Registered on Chronic Illness Benefit (diabetes, high blood pressure, hyperlipidaemia, ischemic heart disease)</p>
-                            <p className="text-5xl font-bold text-[#00a3e0] mt-4">Up to 2,500 points per year</p>
+                            <p className="text-2xl font-bold text-[#00a3e0] mt-4">Up to 2,500 points per year</p>
                         </div>
 
                         <div className="text-center text-gray-400 text-xs mt-16 pb-12">
