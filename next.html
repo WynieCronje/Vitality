@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DeskCore • Beginner Core Strength</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Space+Grotesk:wght@600&amp;display=swap');
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .title-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .exercise-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .video-container {
+            position: relative;
+            padding-top: 56.25%;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+        }
+
+        .check-circle {
+            transition: all 0.2s ease;
+        }
+
+        /* Plank Timer Styles */
+        .plank-timer {
+            font-family: monospace;
+            font-size: 2.25rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+        }
+
+        @media (max-width: 640px) {
+            .exercise-card {
+                margin-bottom: 1.5rem;
+            }
+            
+            .set-row {
+                padding: 1.25rem 1.25rem !important;
+                min-height: 68px;
+            }
+            
+            .check-circle {
+                width: 48px !important;
+                height: 48px !important;
+            }
+        }
+
+        #progress-container {
+            position: sticky;
+            top: 0;
+            background-color: #0a0b0b;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200 min-h-screen">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 py-8 sm:py-12">
+        
+        <!-- Header -->
+        <div class="flex flex-col items-center text-center mb-10">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-11 h-11 sm:w-12 sm:h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0">💪</div>
+                <h1 class="title-font text-4xl sm:text-5xl font-semibold tracking-tighter text-white">DeskCore</h1>
+            </div>
+            <p class="text-emerald-400 text-xl font-medium mb-2">15-minute daily core reset</p>
+            <p class="max-w-md text-zinc-400 text-base sm:text-lg leading-relaxed">
+                Beginner-friendly program for people who sit at a desk all day.<br class="hidden sm:block">
+                Stronger core = better posture &amp; less back pain.
+            </p>
+            
+            <div class="mt-6 inline-flex items-center gap-2 bg-zinc-900 px-5 py-2.5 rounded-3xl text-sm">
+                <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span class="text-emerald-400 font-medium">No equipment • 15–20 minutes • 5 exercises</span>
+            </div>
+        </div>
+
+        <!-- Quick instructions -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div>
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center font-bold text-sm">1</div>
+                        <h3 class="font-semibold text-base">Track every single set</h3>
+                    </div>
+                    <p class="text-zinc-400 text-sm">3 sets per exercise. Tap to check off as you finish.</p>
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center font-bold text-sm">2</div>
+                        <h3 class="font-semibold text-base">Rest 45–60 seconds</h3>
+                    </div>
+                    <p class="text-zinc-400 text-sm">Breathe deeply between sets.</p>
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center font-bold text-sm">3</div>
+                        <h3 class="font-semibold text-base">Progress daily</h3>
+                    </div>
+                    <p class="text-zinc-400 text-sm">Start easier if needed — you’ll improve fast!</p>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-zinc-800 bg-emerald-950/50 rounded-2xl p-6 text-center">
+                <div class="inline-flex items-center gap-2 text-emerald-400 font-medium text-sm mb-2">
+                    <span class="bg-emerald-500 text-emerald-950 px-3 py-1 rounded-2xl">💡 BEST FOR BEGINNERS</span>
+                </div>
+                <p class="text-zinc-300 text-sm sm:text-base">
+                    <strong>Finish all 3 sets of one exercise before moving to the next.</strong><br>
+                    Better focus and form = faster results.
+                </p>
+            </div>
+            
+            <div class="mt-8 pt-8 border-t border-zinc-800 text-center text-xs text-zinc-500 flex items-center justify-center gap-2">
+                <span class="bg-amber-400 text-amber-950 px-2.5 py-1 rounded-xl font-medium">IMPORTANT</span>
+                <span>If you feel any back pain, stop and consult a doctor.</span>
+            </div>
+        </div>
+
+        <!-- Sticky Progress -->
+        <div id="progress-container" class="mb-8 rounded-3xl overflow-hidden">
+            <div class="flex justify-between items-baseline px-6 py-4 bg-zinc-900 border-b border-zinc-800">
+                <div class="text-sm font-medium text-zinc-400">TODAY'S SETS</div>
+                <div id="progress-text" class="text-3xl font-semibold text-emerald-400 tabular-nums">0/15</div>
+            </div>
+            <div class="h-2.5 bg-zinc-800">
+                <div id="progress-bar" 
+                     class="h-2.5 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-r-3xl w-0 transition-all duration-700"></div>
+            </div>
+            <div class="px-6 py-2 text-[10px] text-zinc-500">15 total sets • 3 per exercise</div>
+        </div>
+
+        <!-- Exercises -->
+        <div id="exercises-container" class="grid grid-cols-1 gap-8">
+            <!-- Populated by JS -->
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-16 text-center">
+            <p class="text-zinc-500 text-sm mb-8">
+                Progress saved automatically in your browser.<br>
+                Resets every day at midnight.
+            </p>
+            
+            <button onclick="resetToday()" 
+                    class="w-full max-w-xs mx-auto flex items-center justify-center gap-3 bg-zinc-900 hover:bg-zinc-800 active:bg-zinc-700 border border-zinc-700 text-white px-8 py-5 rounded-3xl text-base font-medium transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.058 11H1M12 3v2m0 16v2m9-9H15m-6 0H3" />
+                </svg>
+                RESET TODAY'S PROGRESS
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const exercises = [
+            {
+                id: "plank",
+                name: "Plank",
+                videoId: "ASdvN_XEl_c",
+                setsReps: "3 sets of 20–30 second holds",
+                rest: "45–60 seconds",
+                desc: "Forearms on floor, body in straight line. Squeeze your core like you're about to be punched in the stomach."
+            },
+            {
+                id: "bird-dog",
+                name: "Bird Dog",
+                videoId: "KA0ekfSePrQ",
+                setsReps: "3 sets of 10 reps per side",
+                rest: "45 seconds",
+                desc: "On all fours. Slowly extend opposite arm and leg while keeping your back flat. Hold 1 second."
+            },
+            {
+                id: "dead-bug",
+                name: "Dead Bug",
+                videoId: "g_BYB0R-4Ws",
+                setsReps: "3 sets of 10 reps per side",
+                rest: "45 seconds",
+                desc: "Lie on back, arms up. Slowly lower opposite arm &amp; leg while pressing lower back into floor."
+            },
+            {
+                id: "glute-bridge",
+                name: "Glute Bridge",
+                videoId: "8bbE64NuDTU",
+                setsReps: "3 sets of 12–15 reps",
+                rest: "45 seconds",
+                desc: "Lie on back, feet flat. Push through heels and squeeze glutes to lift hips until body is straight."
+            },
+            {
+                id: "superman",
+                name: "Superman",
+                videoId: "J9zXkxUAfUA",
+                setsReps: "3 sets of 10–12 reps (hold 2–3s)",
+                rest: "45 seconds",
+                desc: "Lie face down. Lift arms, chest, and legs off the floor like you're flying. Keep neck neutral."
+            }
+        ]
+
+        const TOTAL_SETS = exercises.length * 3
+
+        let progressData = { lastDate: "", completed: [] }
+        let plankTimerInterval = null
+        let plankSeconds = 0
+        let isPlankRunning = false
+
+        function getToday() {
+            const now = new Date()
+            return now.getFullYear() + '-' + 
+                   String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                   String(now.getDate()).padStart(2, '0')
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('deskCoreTracker')
+            const today = getToday()
+            
+            if (saved) {
+                progressData = JSON.parse(saved)
+                if (progressData.lastDate !== today) {
+                    progressData.completed = []
+                    progressData.lastDate = today
+                }
+            } else {
+                progressData = { lastDate: today, completed: [] }
+            }
+            
+            saveProgress()
+            renderExercises()
+            renderProgress()
+        }
+
+        function saveProgress() {
+            localStorage.setItem('deskCoreTracker', JSON.stringify(progressData))
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60)
+            const secs = seconds % 60
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`
+        }
+
+        function startPlankTimer() {
+            if (plankTimerInterval) clearInterval(plankTimerInterval)
+            
+            isPlankRunning = true
+            plankTimerInterval = setInterval(() => {
+                plankSeconds++
+                document.getElementById('plank-timer-display').textContent = formatTime(plankSeconds)
+            }, 1000)
+        }
+
+        function stopPlankTimer() {
+            if (plankTimerInterval) {
+                clearInterval(plankTimerInterval)
+                plankTimerInterval = null
+            }
+            isPlankRunning = false
+        }
+
+        function resetPlankTimer() {
+            stopPlankTimer()
+            plankSeconds = 0
+            document.getElementById('plank-timer-display').textContent = "0:00"
+        }
+
+        function togglePlankTimer() {
+            if (isPlankRunning) {
+                stopPlankTimer()
+            } else {
+                startPlankTimer()
+            }
+        }
+
+        function renderExercises() {
+            const container = document.getElementById('exercises-container')
+            container.innerHTML = ''
+            
+            exercises.forEach(ex => {
+                let setsHTML = ''
+                
+                for (let i = 1; i <= 3; i++) {
+                    const setId = `${ex.id}-set${i}`
+                    const isDone = progressData.completed.includes(setId)
+                    
+                    setsHTML += `
+                        <div class="set-row flex items-center justify-between bg-zinc-950 rounded-2xl px-5 py-5">
+                            <div class="flex items-center gap-4">
+                                <div class="w-8 h-8 bg-zinc-800 text-zinc-400 rounded-2xl flex items-center justify-center text-sm font-bold">${i}</div>
+                                <span class="font-medium text-zinc-200 text-base">Set ${i}</span>
+                            </div>
+                            <label class="relative flex items-center cursor-pointer">
+                                <input 
+                                    type="checkbox" 
+                                    id="check-${setId}"
+                                    ${isDone ? 'checked' : ''}
+                                    onchange="toggleComplete('${setId}')"
+                                    class="peer sr-only">
+                                <div class="check-circle w-10 h-10 border-2 border-zinc-700 rounded-3xl flex items-center justify-center peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-all">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white hidden peer-checked:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7" />
+                                    </svg>
+                                </div>
+                            </label>
+                        </div>
+                    `
+                }
+
+                let extraHTML = ''
+                if (ex.id === "plank") {
+                    extraHTML = `
+                        <div class="mt-6 p-5 bg-zinc-950 rounded-3xl border border-zinc-800">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="text-sm font-medium text-emerald-400">PLANK TIMER</div>
+                                <div onclick="resetPlankTimer()" class="text-xs text-zinc-400 hover:text-white cursor-pointer">RESET</div>
+                            </div>
+                            <div id="plank-timer-display" class="plank-timer text-white text-center mb-5">0:00</div>
+                            <button onclick="togglePlankTimer()" 
+                                    id="plank-timer-btn"
+                                    class="w-full py-4 rounded-3xl font-medium text-base transition-all bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700">
+                                START TIMER
+                            </button>
+                            <p class="text-center text-xs text-zinc-500 mt-3">Tap to start / stop • Auto counts up</p>
+                        </div>
+                    `
+                }
+                
+                const cardHTML = `
+                    <div class="exercise-card bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden">
+                        <div class="video-container bg-black">
+                            <iframe 
+                                src="https://www.youtube.com/embed/${ex.videoId}" 
+                                title="${ex.name} tutorial"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        
+                        <div class="p-6 sm:p-8">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <h2 class="text-2xl font-semibold text-white">${ex.name}</h2>
+                                    <p class="text-emerald-400 text-base mt-1">${ex.setsReps}</p>
+                                </div>
+                            </div>
+                            
+                            <p class="text-zinc-400 text-base leading-relaxed mb-8">${ex.desc}</p>
+                            
+                            ${extraHTML}
+                            
+                            <div class="mt-8 pt-6 border-t border-zinc-800">
+                                <div class="flex items-center justify-between mb-5">
+                                    <p class="text-xs uppercase tracking-widest text-zinc-500 font-medium">YOUR 3 SETS</p>
+                                    <span class="text-xs bg-zinc-800 px-4 py-1.5 rounded-3xl">REST ${ex.rest}</span>
+                                </div>
+                                <div class="space-y-3">
+                                    ${setsHTML}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+                container.innerHTML += cardHTML
+            })
+        }
+
+        function toggleComplete(setId) {
+            const checkbox = document.getElementById(`check-${setId}`)
+            const isChecked = checkbox.checked
+            
+            if (isChecked) {
+                if (!progressData.completed.includes(setId)) {
+                    progressData.completed.push(setId)
+                }
+            } else {
+                progressData.completed = progressData.completed.filter(id => id !== setId)
+            }
+            
+            saveProgress()
+            renderProgress()
+        }
+
+        function renderProgress() {
+            const completedCount = progressData.completed.length
+            const percentage = Math.round((completedCount / TOTAL_SETS) * 100)
+            
+            document.getElementById('progress-text').textContent = `${completedCount}/${TOTAL_SETS}`
+            document.getElementById('progress-bar').style.width = `${percentage}%`
+        }
+
+        function resetToday() {
+            if (confirm("Reset today's progress?\n\nYou can start the workout again today if you want.")) {
+                progressData.completed = []
+                saveProgress()
+                renderExercises()
+                renderProgress()
+                resetPlankTimer()
+            }
+        }
+
+        function initializeApp() {
+            renderExercises()
+            loadProgress()
+        }
+
+        window.onload = initializeApp
+    </script>
+</body>
+</html>
