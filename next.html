@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vitality Points Explorer • Discovery Vitality</title>
+    <title>Health Rewards Points Explorer (Unofficial Reference)</title>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -38,7 +38,7 @@
             --text-orange:   #c2410c;
             --text-purple:   #7e22ce;
             --border:        #e5e7eb;
-            --accent:        #00a3e0;
+            --accent:        #0d9488;
         }
 
         /* ── DARK ── */
@@ -63,7 +63,7 @@
             --text-orange:   #fdba74;
             --text-purple:   #d8b4fe;
             --border:        #334155;
-            --accent:        #38bdf8;
+            --accent:        #2dd4bf;
         }
 
         body { background: var(--bg-page); color: var(--text-primary); }
@@ -81,8 +81,8 @@
         html.dark .v-red { color: #fca5a5; }
 
         /* ── Header ── */
-        .header-bg { background: linear-gradient(135deg, #00a3e0 0%, #0077b6 100%); }
-        html.dark .header-bg { background: linear-gradient(135deg, #0c4a6e 0%, #082f49 100%); }
+        .header-bg { background: linear-gradient(135deg, #0f766e 0%, #134e4a 100%); }
+        html.dark .header-bg { background: linear-gradient(135deg, #134e4a 0%, #0f1f1d 100%); }
 
         /* ── Section cards ── */
         .section-card {
@@ -223,12 +223,12 @@
             border: none; cursor: pointer; font-size: 0.8rem;
             transition: background 0.15s, color 0.15s;
         }
-        .theme-btn.active { background: white; color: #00a3e0; }
+        .theme-btn.active { background: white; color: #0f766e; }
 
         /* ── PDF link ── */
         .pdf-link {
             display: flex; align-items: center; gap: 6px;
-            background: rgba(255,255,255,0.9); color: #00a3e0;
+            background: rgba(255,255,255,0.9); color: #0f766e;
             padding: 8px 14px; border-radius: 12px; font-weight: 600;
             font-size: 0.82rem; text-decoration: none; white-space: nowrap;
         }
@@ -301,7 +301,7 @@ function App() {
         return (
             <div id={id} className="section-card">
                 <div style={{display:'flex', alignItems:'flex-start', gap:12, marginBottom:20}}>
-                    <div style={{width:40, height:40, minWidth:40, background:'#00a3e0', borderRadius:12,
+                    <div style={{width:40, height:40, minWidth:40, background:'#0d9488', borderRadius:12,
                                  display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.25rem'}}>
                         {icon}
                     </div>
@@ -393,14 +393,14 @@ function App() {
                     {/* Title row */}
                     <div className="header-top">
                         <div style={{display:'flex', alignItems:'center', gap:12}}>
-                            <i className="fa-solid fa-heart-pulse" style={{fontSize:'2.2rem', color:'white', flexShrink:0}}></i>
+                            <i className="fa-solid fa-list-check" style={{fontSize:'2.2rem', color:'white', flexShrink:0}}></i>
                             <div>
                                 <h1 style={{margin:0, fontSize:'clamp(1.2rem,4vw,2rem)', fontWeight:700,
                                             color:'white', letterSpacing:'-0.02em', lineHeight:1.2}}>
-                                    Vitality Points Explorer
+                                    Health Rewards Points Explorer
                                 </h1>
                                 <p style={{margin:'3px 0 0', color:'rgba(255,255,255,0.78)', fontSize:'0.8rem'}}>
-                                    Discovery Vitality South Africa • Official Guide
+                                    Unofficial AI-generated reference • Independent &amp; not affiliated with any provider
                                 </p>
                             </div>
                         </div>
@@ -488,6 +488,13 @@ function App() {
                       ['#chronic','Chronic'],['#status','Status Levels']].map(([h,l]) => (
                         <a key={h} href={h} className="nav-pill">{l}</a>
                     ))}
+                </div>
+
+                {/* Top disclaimer banner */}
+                <div className="info-box v-warn" style={{marginBottom:24}}>
+                    <strong>⚠️ Unofficial &amp; AI-generated.</strong> This is an independent reference tool, not affiliated with or
+                    endorsed by any rewards provider. The information is derived from a publicly available Discovery Vitality
+                    Points &amp; Partners PDF and is provided for general information only — always confirm details with the provider before relying on them.
                 </div>
 
 
@@ -651,7 +658,7 @@ function App() {
                     <InfoBox color="orange">
                         <h3 style={{margin:'0 0 6px', fontSize:'0.9rem', fontWeight:600}}>🏅 Endurance & High Performance Athletes</h3>
                         <p style={{fontSize:'0.75rem', margin:'0 0 10px', opacity:0.85}}>
-                            Apply via Discovery app. Points are <em>in addition to</em> the tables above.
+                            Apply via the provider's app. Points are <em>in addition to</em> the tables above.
                         </p>
                         <Tbl>
                             <THead cols={['Activity','Points']} />
@@ -670,7 +677,7 @@ function App() {
                         <InfoBox color="purple">
                             <h3 style={{margin:'0 0 4px', fontSize:'0.9rem', fontWeight:600}}>🏁 Timed & Verified Race Events</h3>
                             <p style={{fontSize:'0.75rem', margin:'0 0 10px', opacity:0.85}}>
-                                Claim via Discovery app with race certificate. Duathletes/triathletes earn full points per discipline.
+                                Claim via the provider's app with a race certificate. Duathletes/triathletes earn full points per discipline.
                             </p>
                             <div className="tbl-wrap">
                                 <table style={{fontSize:'0.78rem', textAlign:'center'}}>
@@ -766,7 +773,7 @@ function App() {
                 {/* ══ 07 CHRONIC ══ */}
                 <SectionCard id="chronic" icon="🩺" title="07 • Managing Chronic Conditions">
                     <p style={{marginBottom:12, color:'var(--text-secondary)', fontSize:'0.875rem'}}>
-                        Registered on the Chronic Illness Benefit with Discovery Health. Qualifying conditions:
+                        Registered on the scheme's Chronic Illness Benefit. Qualifying conditions:
                     </p>
                     <div style={{display:'flex', flexWrap:'wrap', gap:8, marginBottom:16}}>
                         {['Diabetes','High blood pressure','Hyperlipidaemia','Ischemic heart disease'].map(c => (
@@ -825,7 +832,7 @@ function App() {
                     </p>
                     <div style={{marginTop:12}}>
                         <InfoBox color="warn">
-                            <strong>🚗 VitalityDrive Bonus (under 30s):</strong> Using Discovery Insure app with TAG solution,
+                            <strong>🚗 VitalityDrive Bonus (under 30s):</strong> Using the linked insurance app with TAG solution,
                             earn <strong>500 additional pts/month</strong> when Driver Performance Score (DPS) exceeds 1,000 points.
                         </InfoBox>
                     </div>
@@ -833,11 +840,22 @@ function App() {
 
 
                 {/* Footer */}
-                <p style={{textAlign:'center', fontSize:'0.68rem', color:'var(--text-muted)', paddingBottom:40, lineHeight:1.6}}>
-                    All data sourced from the official Discovery Vitality Points &amp; Partners PDF (RCK_1158654DHV_02/12/2026_V1) •
-                    Discovery Vitality (Pty) Ltd, Reg. 1999/007736/07 • Terms and conditions apply •{' '}
-                    <a href="https://www.discovery.co.za" style={{color:'var(--accent)'}}>discovery.co.za</a>
-                </p>
+                <div style={{paddingBottom:40}}>
+                    <div className="info-box v-warn" style={{marginBottom:16}}>
+                        <strong>⚠️ Disclaimer:</strong> This is an <strong>unofficial</strong>, AI-generated reference tool. It is
+                        <strong> not created, endorsed by, or affiliated with Discovery</strong> in any way, and has no legal or official
+                        connection to Discovery Vitality. The content was derived from a publicly available Discovery Vitality Points &amp;
+                        Partners PDF and is provided <strong>for general information purposes only</strong>. Points, rules and eligibility
+                        change over time and may contain errors. Always confirm all details directly with Discovery before relying on them.
+                    </div>
+                    <p style={{textAlign:'center', fontSize:'0.68rem', color:'var(--text-muted)', lineHeight:1.6, margin:0}}>
+                        Derived from the Discovery Vitality Points &amp; Partners PDF (ref. RCK_1158654DHV_02/12/2026_V1).
+                        "Discovery", "Vitality" and all related names, programme names and marks are trademarks of Discovery Limited /
+                        Discovery Vitality (Pty) Ltd, used here for factual reference only. No affiliation or endorsement is implied.
+                        Verify everything at{' '}
+                        <a href="https://www.discovery.co.za" target="_blank" style={{color:'var(--accent)'}}>discovery.co.za</a>.
+                    </p>
+                </div>
 
             </div>
         </div>
