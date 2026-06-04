@@ -483,7 +483,7 @@ function App() {
                 {/* Nav pills */}
                 <div style={{display:'flex', flexWrap:'wrap', gap:6, marginBottom:28,
                              borderBottom:'1px solid var(--border)', paddingBottom:16}}>
-                    {[['#health','Health Check'],['#screenings','Screenings'],['#fitness','Fitness'],
+                    {[['#fitness','Fitness'],['#health','Health Check'],['#screenings','Screenings'],
                       ['#eating','Eat Healthy'],['#family','Family'],['#vaccinations','Vaccinations'],
                       ['#chronic','Chronic'],['#status','Status Levels']].map(([h,l]) => (
                         <a key={h} href={h} className="nav-pill">{l}</a>
@@ -498,86 +498,9 @@ function App() {
                 </div>
 
 
-                {/* ══ 01 HEALTH CHECK ══ */}
-                <SectionCard id="health" icon="📋"
-                    title="01 • Online Assessments & Vitality Health Check"
-                    subtitle="Max 25,000 points per year • Members 18+">
-
-                    <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,280px),1fr))', gap:20}}>
-                        <div>
-                            <h3 style={{margin:'0 0 10px', fontSize:'0.9rem', fontWeight:600}}>Online Assessments</h3>
-                            <ListRow label="Vitality Age assessment" pts="1,500 once/year" />
-                            <ListRow label="Mental Wellbeing Assessments" pts="500 × 2 = 1,000/year"
-                                     note="Must be 6 months apart to earn both" />
-                        </div>
-                        <div>
-                            <h3 style={{margin:'0 0 6px', fontSize:'0.9rem', fontWeight:600}}>Vitality Health Check (5 measures)</h3>
-                            <p style={{margin:'0 0 10px', fontSize:'0.75rem', color:'var(--text-muted)'}}>
-                                Blood pressure • Blood glucose • Cholesterol • Weight assessment • Non-smoker's declaration
-                            </p>
-                            <Tbl>
-                                <thead><tr className="v-thead">
-                                    <th style={{textAlign:'left',  padding:'9px 12px', fontSize:'0.75rem', color:'var(--text-secondary)'}}>In-range</th>
-                                    <th style={{textAlign:'center',padding:'9px 12px', fontSize:'0.75rem', color:'var(--text-secondary)'}}>0 high-risk</th>
-                                    <th style={{textAlign:'center',padding:'9px 12px', fontSize:'0.75rem', color:'var(--text-secondary)'}}>1+ high-risk</th>
-                                </tr></thead>
-                                <tbody>
-                                    {[['5','22,500','—'],['4','15,000','5,000'],['3','10,000','5,000'],
-                                      ['2','7,500','5,000'],['1','5,000','5,000']].map(([n,a,b]) => (
-                                        <tr key={n} className="tbl-row">
-                                            <td style={{padding:'8px 12px'}}>{n}</td>
-                                            <td style={{padding:'8px 12px',textAlign:'center',fontWeight:600,color:'var(--accent)'}}>{a}</td>
-                                            <td style={{padding:'8px 12px',textAlign:'center',fontWeight:600,
-                                                        color: b==='—'?'var(--text-muted)':'var(--accent)'}}>{b}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Tbl>
-                            <p style={{fontSize:'0.7rem', color:'var(--text-muted)', marginTop:6}}>
-                                Partial: 4 = 5,000 pts • 3 = 2,500 pts • &lt;3 = 0 pts &nbsp;|&nbsp; Re-tests must be ≥90 days apart
-                            </p>
-                        </div>
-                    </div>
-
-                    <div style={{marginTop:16}}>
-                        <InfoBox color="info">
-                            <strong>🏅 Vitality 65+ Extras:</strong> Falls risk assessment <Pts v="500 pts" /> (counts towards 22,500 max) •
-                            Vitality Functional Assessment <Pts v="2,500 pts/year" /> • VHC for 65+ unlocks a personalised clinical report
-                        </InfoBox>
-                    </div>
-                </SectionCard>
-
-
-                {/* ══ 02 SCREENINGS ══ */}
-                <SectionCard id="screenings" icon="🔬"
-                    title="02 • Additional Screenings"
-                    subtitle="Age & gender specific">
-                    <div className="two-col">
-                        {[
-                            ['Colon cancer screening (45+)', '2,500 once/year', 'Colonoscopy/FIT/FOBT — colonoscopy carries over 10 years'],
-                            ['Bone mass density (women 65+, men 70+)', '2,500 once/2 years', 'DEXA scan — valid for both years'],
-                            ['Mammogram (women 40+)', '2,500 once/2 years', 'Points carry over to following year'],
-                            ['Pap smear (women 25–65)', '2,500', 'Once/3 years — carries over'],
-                            ['HPV cervical cancer test (women 25–65)', '2,500', 'Alternative to Pap — once/5 years. One or the other only'],
-                            ['Dental check-up', '1,000 once/year', null],
-                            ['Glaucoma / vision test (60+)', '1,000 once/year', 'One of the two — whichever is first'],
-                            ['Hearing test (65+ only)', '1,000 once in lifetime', 'Audiologist or Acoustician'],
-                            ['Optometrist (65+ only)', 'Up to 3,500 once/year', null],
-                            ['Tdap vaccine (65+)', 'Points awarded', 'Bring GP script to VHC for 65+'],
-                            ['Premier PLUS GP consult (65+ only)', 'Up to 2,500 once/year', null],
-                            ['First HIV test (18+)', '7,500 once in lifetime', null],
-                            ['HIV counselling & testing — subsequent years (18+)', '1,000 once/year', null],
-                        ].map(([l,p,n]) => <BetweenRow key={l} label={l} pts={p} note={n} />)}
-                    </div>
-                    <p style={{fontSize:'0.7rem', color:'var(--text-muted)', marginTop:10}}>
-                        Pap smear and HPV test: points for one or the other, not both.
-                    </p>
-                </SectionCard>
-
-
-                {/* ══ 03 FITNESS ══ */}
+                {/* ══ 01 FITNESS ══ */}
                 <SectionCard id="fitness" icon="🏃"
-                    title="03 • Earn Points for Getting Active"
+                    title="01 • Earn Points for Getting Active"
                     subtitle="One activity per day — highest wins • Max 25,000 pts/year + 10,000 Cardio Fitness pts (separate)">
 
                     {/* Cardio Fitness Level */}
@@ -711,6 +634,85 @@ function App() {
                         </InfoBox>
                     </div>
                 </SectionCard>
+
+
+                {/* ══ 02 HEALTH CHECK ══ */}
+                <SectionCard id="health" icon="📋"
+                    title="02 • Online Assessments & Vitality Health Check"
+                    subtitle="Max 25,000 points per year • Members 18+">
+
+                    <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,280px),1fr))', gap:20}}>
+                        <div>
+                            <h3 style={{margin:'0 0 10px', fontSize:'0.9rem', fontWeight:600}}>Online Assessments</h3>
+                            <ListRow label="Vitality Age assessment" pts="1,500 once/year" />
+                            <ListRow label="Mental Wellbeing Assessments" pts="500 × 2 = 1,000/year"
+                                     note="Must be 6 months apart to earn both" />
+                        </div>
+                        <div>
+                            <h3 style={{margin:'0 0 6px', fontSize:'0.9rem', fontWeight:600}}>Vitality Health Check (5 measures)</h3>
+                            <p style={{margin:'0 0 10px', fontSize:'0.75rem', color:'var(--text-muted)'}}>
+                                Blood pressure • Blood glucose • Cholesterol • Weight assessment • Non-smoker's declaration
+                            </p>
+                            <Tbl>
+                                <thead><tr className="v-thead">
+                                    <th style={{textAlign:'left',  padding:'9px 12px', fontSize:'0.75rem', color:'var(--text-secondary)'}}>In-range</th>
+                                    <th style={{textAlign:'center',padding:'9px 12px', fontSize:'0.75rem', color:'var(--text-secondary)'}}>0 high-risk</th>
+                                    <th style={{textAlign:'center',padding:'9px 12px', fontSize:'0.75rem', color:'var(--text-secondary)'}}>1+ high-risk</th>
+                                </tr></thead>
+                                <tbody>
+                                    {[['5','22,500','—'],['4','15,000','5,000'],['3','10,000','5,000'],
+                                      ['2','7,500','5,000'],['1','5,000','5,000']].map(([n,a,b]) => (
+                                        <tr key={n} className="tbl-row">
+                                            <td style={{padding:'8px 12px'}}>{n}</td>
+                                            <td style={{padding:'8px 12px',textAlign:'center',fontWeight:600,color:'var(--accent)'}}>{a}</td>
+                                            <td style={{padding:'8px 12px',textAlign:'center',fontWeight:600,
+                                                        color: b==='—'?'var(--text-muted)':'var(--accent)'}}>{b}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Tbl>
+                            <p style={{fontSize:'0.7rem', color:'var(--text-muted)', marginTop:6}}>
+                                Partial: 4 = 5,000 pts • 3 = 2,500 pts • &lt;3 = 0 pts &nbsp;|&nbsp; Re-tests must be ≥90 days apart
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style={{marginTop:16}}>
+                        <InfoBox color="info">
+                            <strong>🏅 Vitality 65+ Extras:</strong> Falls risk assessment <Pts v="500 pts" /> (counts towards 22,500 max) •
+                            Vitality Functional Assessment <Pts v="2,500 pts/year" /> • VHC for 65+ unlocks a personalised clinical report
+                        </InfoBox>
+                    </div>
+                </SectionCard>
+
+
+                {/* ══ 03 SCREENINGS ══ */}
+                <SectionCard id="screenings" icon="🔬"
+                    title="03 • Additional Screenings"
+                    subtitle="Age & gender specific">
+                    <div className="two-col">
+                        {[
+                            ['Colon cancer screening (45+)', '2,500 once/year', 'Colonoscopy/FIT/FOBT — colonoscopy carries over 10 years'],
+                            ['Bone mass density (women 65+, men 70+)', '2,500 once/2 years', 'DEXA scan — valid for both years'],
+                            ['Mammogram (women 40+)', '2,500 once/2 years', 'Points carry over to following year'],
+                            ['Pap smear (women 25–65)', '2,500', 'Once/3 years — carries over'],
+                            ['HPV cervical cancer test (women 25–65)', '2,500', 'Alternative to Pap — once/5 years. One or the other only'],
+                            ['Dental check-up', '1,000 once/year', null],
+                            ['Glaucoma / vision test (60+)', '1,000 once/year', 'One of the two — whichever is first'],
+                            ['Hearing test (65+ only)', '1,000 once in lifetime', 'Audiologist or Acoustician'],
+                            ['Optometrist (65+ only)', 'Up to 3,500 once/year', null],
+                            ['Tdap vaccine (65+)', 'Points awarded', 'Bring GP script to VHC for 65+'],
+                            ['Premier PLUS GP consult (65+ only)', 'Up to 2,500 once/year', null],
+                            ['First HIV test (18+)', '7,500 once in lifetime', null],
+                            ['HIV counselling & testing — subsequent years (18+)', '1,000 once/year', null],
+                        ].map(([l,p,n]) => <BetweenRow key={l} label={l} pts={p} note={n} />)}
+                    </div>
+                    <p style={{fontSize:'0.7rem', color:'var(--text-muted)', marginTop:10}}>
+                        Pap smear and HPV test: points for one or the other, not both.
+                    </p>
+                </SectionCard>
+
+
 
 
                 {/* ══ 04 EAT HEALTHY ══ */}
