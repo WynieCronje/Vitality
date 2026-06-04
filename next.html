@@ -8,144 +8,211 @@
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
-    <!-- Tailwind with darkMode: class explicitly configured -->
-    <script>
-        window.tailwind = window.tailwind || {};
-        window.tailwindConfig = { darkMode: 'class' };
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { darkMode: 'class' };
-    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-        * { box-sizing: border-box; }
-        body { font-family: 'Inter', system-ui, sans-serif; margin: 0; }
+        *, *::before, *::after { box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, sans-serif; margin: 0; -webkit-text-size-adjust: 100%; }
+        img, table { max-width: 100%; }
 
-        .header-bg { background: linear-gradient(90deg, #00a3e0, #0077b6); }
-
-        .section-card {
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-        .section-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 40px -8px rgba(0,0,0,0.12);
-        }
-
-        table { border-collapse: collapse; width: 100%; }
-
-        .badge-cap {
-            display: inline-block;
-            background: #fef9c3;
-            color: #854d0e;
-            font-size: 0.6rem;
-            padding: 1px 5px;
-            border-radius: 999px;
-            font-weight: 700;
-            vertical-align: middle;
-            margin-left: 5px;
-            letter-spacing: 0.03em;
-        }
-
-        /* ── LIGHT THEME VARS ── */
+        /* ── LIGHT ── */
         :root {
-            --bg-page:      #f3f4f6;
-            --bg-card:      #ffffff;
-            --bg-subtle:    #f9fafb;
-            --bg-row-alt:   #f3f4f6;
-            --bg-thead:     #f3f4f6;
-            --bg-info:      #eff6ff;
-            --bg-success:   #f0fdf4;
-            --bg-warn:      #fffbeb;
-            --bg-orange:    #fff7ed;
-            --bg-purple:    #faf5ff;
-            --bg-red:       #fef2f2;
-            --text-primary: #111827;
+            --bg-page:       #f3f4f6;
+            --bg-card:       #ffffff;
+            --bg-subtle:     #f9fafb;
+            --bg-row-alt:    #f3f4f6;
+            --bg-thead:      #f3f4f6;
+            --bg-info:       #eff6ff;
+            --bg-success:    #f0fdf4;
+            --bg-warn:       #fffbeb;
+            --bg-orange:     #fff7ed;
+            --bg-purple:     #faf5ff;
+            --bg-red:        #fef2f2;
+            --text-primary:  #111827;
             --text-secondary:#6b7280;
-            --text-muted:   #9ca3af;
-            --text-info:    #1d4ed8;
-            --text-success: #15803d;
-            --text-warn:    #92400e;
-            --text-orange:  #c2410c;
-            --text-purple:  #7e22ce;
-            --border:       #e5e7eb;
-            --border-subtle:#f3f4f6;
-            --accent:       #00a3e0;
+            --text-muted:    #9ca3af;
+            --text-info:     #1d4ed8;
+            --text-success:  #15803d;
+            --text-warn:     #92400e;
+            --text-orange:   #c2410c;
+            --text-purple:   #7e22ce;
+            --border:        #e5e7eb;
+            --accent:        #00a3e0;
         }
 
-        /* ── DARK THEME VARS ── */
+        /* ── DARK ── */
         html.dark {
-            --bg-page:      #0f172a;
-            --bg-card:      #1e293b;
-            --bg-subtle:    #1e293b;
-            --bg-row-alt:   #263346;
-            --bg-thead:     #263346;
-            --bg-info:      #1e3a5f;
-            --bg-success:   #052e16;
-            --bg-warn:      #422006;
-            --bg-orange:    #431407;
-            --bg-purple:    #2e1065;
-            --bg-red:       #450a0a;
-            --text-primary: #f1f5f9;
+            --bg-page:       #0f172a;
+            --bg-card:       #1e293b;
+            --bg-subtle:     #263346;
+            --bg-row-alt:    #263346;
+            --bg-thead:      #263346;
+            --bg-info:       #1e3a5f;
+            --bg-success:    #052e16;
+            --bg-warn:       #422006;
+            --bg-orange:     #431407;
+            --bg-purple:     #2e1065;
+            --bg-red:        #450a0a;
+            --text-primary:  #f1f5f9;
             --text-secondary:#94a3b8;
-            --text-muted:   #64748b;
-            --text-info:    #93c5fd;
-            --text-success: #86efac;
-            --text-warn:    #fde68a;
-            --text-orange:  #fdba74;
-            --text-purple:  #d8b4fe;
-            --border:       #334155;
-            --border-subtle:#1e293b;
-            --accent:       #38bdf8;
+            --text-muted:    #64748b;
+            --text-info:     #93c5fd;
+            --text-success:  #86efac;
+            --text-warn:     #fde68a;
+            --text-orange:   #fdba74;
+            --text-purple:   #d8b4fe;
+            --border:        #334155;
+            --accent:        #38bdf8;
         }
 
-        html.dark .badge-cap { background: #713f12; color: #fef9c3; }
-
-        /* Apply vars to the page */
         body { background: var(--bg-page); color: var(--text-primary); }
 
+        /* ── Utility classes ── */
         .v-card    { background: var(--bg-card); }
         .v-subtle  { background: var(--bg-subtle); }
         .v-thead   { background: var(--bg-thead); }
-        .v-row-alt { background: var(--bg-row-alt); }
-        .v-info    { background: var(--bg-info);    color: var(--text-info); }
-        .v-success { background: var(--bg-success); color: var(--text-success); }
-        .v-warn    { background: var(--bg-warn);    color: var(--text-warn); }
-        .v-orange  { background: var(--bg-orange);  color: var(--text-orange); }
-        .v-purple  { background: var(--bg-purple);  color: var(--text-purple); }
-        .v-red     { background: var(--bg-red);     color: var(--text-red, #b91c1c); }
-        .v-border  { border-color: var(--border); }
-        .v-divide > * + * { border-top: 1px solid var(--border); }
-        .v-text-secondary { color: var(--text-secondary); }
-        .v-text-muted     { color: var(--text-muted); }
-        .v-accent         { color: var(--accent); }
+        .v-info    { background: var(--bg-info);   color: var(--text-info); }
+        .v-success { background: var(--bg-success);color: var(--text-success); }
+        .v-warn    { background: var(--bg-warn);   color: var(--text-warn); }
+        .v-orange  { background: var(--bg-orange); color: var(--text-orange); }
+        .v-purple  { background: var(--bg-purple); color: var(--text-purple); }
+        .v-red     { background: var(--bg-red);    color: #b91c1c; }
+        html.dark .v-red { color: #fca5a5; }
 
+        /* ── Header ── */
+        .header-bg { background: linear-gradient(135deg, #00a3e0 0%, #0077b6 100%); }
+
+        /* ── Section cards ── */
+        .section-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 20px 16px;
+            margin-bottom: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        @media (min-width: 640px) {
+            .section-card { padding: 24px 28px; margin-bottom: 28px; border-radius: 24px; }
+        }
+        @media (min-width: 640px) {
+            .section-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 20px 40px -8px rgba(0,0,0,0.12);
+            }
+        }
+
+        /* ── Tables ── */
+        table { border-collapse: collapse; width: 100%; }
+        .tbl-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 4px; -webkit-overflow-scrolling: touch; }
+        .tbl-row { border-bottom: 1px solid var(--border); }
+        .tbl-row:last-child { border-bottom: none; }
+        .tbl-row:hover { background: var(--bg-row-alt); }
+
+        /* ── Badge ── */
+        .badge-cap {
+            display: inline-block;
+            background: #fef9c3; color: #854d0e;
+            font-size: 0.58rem; padding: 1px 5px;
+            border-radius: 999px; font-weight: 700;
+            vertical-align: middle; margin-left: 5px;
+            letter-spacing: 0.03em; white-space: nowrap;
+        }
+        html.dark .badge-cap { background: #713f12; color: #fef9c3; }
+
+        /* ── Nav pills ── */
         .nav-pill {
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--text-primary);
-            padding: 8px 18px;
+            padding: 7px 14px;
             border-radius: 999px;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             font-weight: 500;
             text-decoration: none;
             white-space: nowrap;
             transition: border-color 0.15s, color 0.15s;
+            flex-shrink: 0;
         }
         .nav-pill:hover { border-color: var(--accent); color: var(--accent); }
 
-        .themed-input {
-            background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-        }
-        .themed-input:focus { outline: none; box-shadow: 0 0 0 3px rgba(0,163,224,0.25); border-color: var(--accent); }
+        /* ── Info boxes ── */
+        .info-box { border-radius: 14px; padding: 14px 16px; font-size: 0.875rem; }
 
-        .tbl-row { border-bottom: 1px solid var(--border); }
-        .tbl-row:last-child { border-bottom: none; }
-        .tbl-row:hover { background: var(--bg-row-alt); }
+        /* ── List row ── */
+        .list-row {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            padding: 11px 14px; border-radius: 12px;
+            background: var(--bg-subtle);
+            margin-bottom: 8px; gap: 10px; font-size: 0.875rem;
+        }
+        .list-row-pts { font-weight: 600; color: var(--accent); white-space: nowrap; flex-shrink: 0; }
+        .list-row-note { display: block; font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+
+        /* ── Between row (screenings / vaccinations) ── */
+        .between-row {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            padding: 10px 0; border-bottom: 1px solid var(--border);
+            font-size: 0.875rem; gap: 8px;
+        }
+        .between-row:last-child { border-bottom: none; }
+        .between-row-pts { font-weight: 600; color: var(--accent); white-space: nowrap; flex-shrink: 0; }
+        .between-row-note { display: block; font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+
+        /* ── Two-col grid that collapses cleanly ── */
+        .two-col { display: grid; grid-template-columns: 1fr; gap: 0 28px; }
+        @media (min-width: 600px) { .two-col { grid-template-columns: 1fr 1fr; } }
+
+        /* ── DOB panel layout ── */
+        .dob-row { display: flex; flex-direction: column; gap: 14px; }
+        @media (min-width: 540px) { .dob-row { flex-direction: row; align-items: center; } }
+
+        .dob-input-wrap { width: 100%; }
+        @media (min-width: 540px) { .dob-input-wrap { max-width: 240px; flex-shrink: 0; } }
+
+        /* ── HR zones result panel ── */
+        .hr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (min-width: 540px) { .hr-grid { grid-template-columns: auto auto 1fr; } }
+
+        .hr-zones-block { grid-column: 1 / -1; }
+        @media (min-width: 540px) { .hr-zones-block { grid-column: auto; } }
+
+        .zones-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+        /* ── Cardio fitness level grid ── */
+        .cfl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        @media (min-width: 480px) { .cfl-grid { grid-template-columns: repeat(5, 1fr); } }
+
+        /* ── Section title ── */
+        .section-title { margin: 0; font-size: clamp(1rem, 2.5vw, 1.3rem); font-weight: 600; line-height: 1.3; }
+        .section-subtitle { margin: 3px 0 0; font-size: 0.82rem; color: var(--text-secondary); }
+
+        /* ── Header title/controls layout ── */
+        .header-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+        .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
+
+        /* ── Theme toggle ── */
+        .theme-toggle { display: flex; border: 1px solid rgba(255,255,255,0.4); border-radius: 999px; overflow: hidden; }
+        .theme-btn {
+            padding: 8px 12px; background: transparent; color: white;
+            border: none; cursor: pointer; font-size: 0.8rem;
+            transition: background 0.15s, color 0.15s;
+        }
+        .theme-btn.active { background: white; color: #00a3e0; }
+
+        /* ── PDF link ── */
+        .pdf-link {
+            display: flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.9); color: #00a3e0;
+            padding: 8px 14px; border-radius: 12px; font-weight: 600;
+            font-size: 0.82rem; text-decoration: none; white-space: nowrap;
+        }
+
+        /* ── Main container ── */
+        .main-wrap { max-width: 1100px; margin: 0 auto; padding: 24px 14px; }
+        @media (min-width: 640px) { .main-wrap { padding: 32px 20px; } }
+
+        .header-inner { max-width: 1100px; margin: 0 auto; padding: 18px 14px 0; }
+        @media (min-width: 640px) { .header-inner { padding: 24px 20px 0; } }
     </style>
 </head>
 <body>
@@ -155,40 +222,28 @@
 const { useState, useEffect } = React;
 
 function App() {
-    const [dob, setDob]     = useState('');
-    const [age, setAge]     = useState(null);
-    const [maxHR, setMaxHR] = useState(null);
-    const [zones, setZones] = useState({
-        z60_69: '60–69%', z70_79: '70–79%',
-        z80p: '80%+', z60p: '60%+', z70p: '70%+'
-    });
-    const [theme, setTheme] = useState('system');
+    const [dob,    setDob]    = useState('');
+    const [age,    setAge]    = useState(null);
+    const [maxHR,  setMaxHR]  = useState(null);
+    const [zones,  setZones]  = useState({ z60_69:'60–69%', z70_79:'70–79%', z80p:'80%+', z60p:'60%+', z70p:'70%+' });
+    const [theme,  setTheme]  = useState('system');
 
     useEffect(() => {
         const d = localStorage.getItem('vitalityDOB');
         if (d) { setDob(d); calcHR(d); }
         const t = localStorage.getItem('vitalityTheme') || 'system';
         setTheme(t); applyTheme(t);
-
-        // Watch system preference changes
         const mq = window.matchMedia('(prefers-color-scheme: dark)');
-        const handler = () => {
-            if (localStorage.getItem('vitalityTheme') === 'system') applyTheme('system');
-        };
+        const handler = () => { if (localStorage.getItem('vitalityTheme') === 'system') applyTheme('system'); };
         mq.addEventListener('change', handler);
         return () => mq.removeEventListener('change', handler);
     }, []);
 
     function calcHR(d) {
-        if (!d) {
-            setAge(null); setMaxHR(null);
-            setZones({ z60_69:'60–69%', z70_79:'70–79%', z80p:'80%+', z60p:'60%+', z70p:'70%+' });
-            return;
-        }
-        const dob  = new Date(d), today = new Date();
-        let a = today.getFullYear() - dob.getFullYear();
-        if (today.getMonth() < dob.getMonth() ||
-           (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) a--;
+        if (!d) { setAge(null); setMaxHR(null); setZones({ z60_69:'60–69%', z70_79:'70–79%', z80p:'80%+', z60p:'60%+', z70p:'70%+' }); return; }
+        const born = new Date(d), today = new Date();
+        let a = today.getFullYear() - born.getFullYear();
+        if (today.getMonth() < born.getMonth() || (today.getMonth() === born.getMonth() && today.getDate() < born.getDate())) a--;
         const mhr = 220 - a;
         setAge(a); setMaxHR(mhr);
         setZones({
@@ -202,35 +257,31 @@ function App() {
     }
 
     function applyTheme(t) {
-        const html = document.documentElement;
         const dark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-        html.classList.toggle('dark', dark);
+        document.documentElement.classList.toggle('dark', dark);
         localStorage.setItem('vitalityTheme', t);
     }
-
     function setT(t) { setTheme(t); applyTheme(t); }
 
     const z = zones;
 
-    /* ── Small helpers ── */
-    const Pts = ({v}) => <span style={{color:'var(--accent)', fontWeight:600}}>{v}</span>;
+    /* ── Reusable primitives ── */
 
-    function InfoBox({color, children}) {
-        return <div className={`v-${color} rounded-2xl p-4 text-sm`} style={{borderRadius:'16px', padding:'16px'}}>{children}</div>;
+    function Pts({v}) {
+        return <span style={{color:'var(--accent)', fontWeight:600}}>{v}</span>;
     }
 
     function SectionCard({id, icon, title, subtitle, children}) {
         return (
-            <div id={id} className="section-card v-card rounded-3xl mb-8 md:mb-12"
-                 style={{borderRadius:'24px', padding:'24px 28px', overflow:'hidden'}}>
-                <div style={{display:'flex', alignItems:'center', gap:'14px', marginBottom:'22px'}}>
-                    <div style={{width:44,height:44,background:'#00a3e0',borderRadius:14,display:'flex',
-                                 alignItems:'center',justifyContent:'center',fontSize:'1.4rem',flexShrink:0}}>
+            <div id={id} className="section-card">
+                <div style={{display:'flex', alignItems:'flex-start', gap:12, marginBottom:20}}>
+                    <div style={{width:40, height:40, minWidth:40, background:'#00a3e0', borderRadius:12,
+                                 display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.25rem'}}>
                         {icon}
                     </div>
-                    <div>
-                        <h2 style={{margin:0,fontSize:'1.35rem',fontWeight:600}}>{title}</h2>
-                        {subtitle && <p style={{margin:'2px 0 0',fontSize:'0.85rem',color:'var(--text-secondary)'}}>{subtitle}</p>}
+                    <div style={{minWidth:0}}>
+                        <h2 className="section-title">{title}</h2>
+                        {subtitle && <p className="section-subtitle">{subtitle}</p>}
                     </div>
                 </div>
                 {children}
@@ -238,12 +289,10 @@ function App() {
         );
     }
 
-    function Tbl({children}) {
+    function Tbl({children, small}) {
         return (
-            <div style={{overflowX:'auto',borderRadius:16,border:'1px solid var(--border)',marginBottom:4}}>
-                <table style={{width:'100%',fontSize:'0.875rem'}}>
-                    {children}
-                </table>
+            <div className="tbl-wrap">
+                <table style={{fontSize: small ? '0.78rem' : '0.875rem'}}>{children}</table>
             </div>
         );
     }
@@ -253,11 +302,12 @@ function App() {
             <thead>
                 <tr className="v-thead">
                     {cols.map((c,i) => (
-                        <th key={i} style={{textAlign: i===0?'left':'right', padding:'12px 20px',
-                                            fontWeight:600, fontSize:'0.8rem', letterSpacing:'0.03em',
-                                            color:'var(--text-secondary)', whiteSpace:'nowrap'}}>
-                            {c}
-                        </th>
+                        <th key={i} style={{
+                            textAlign: i===0 ? 'left' : 'right',
+                            padding:'11px 16px', fontWeight:600,
+                            fontSize:'0.78rem', letterSpacing:'0.03em',
+                            color:'var(--text-secondary)', whiteSpace:'nowrap'
+                        }}>{c}</th>
                     ))}
                 </tr>
             </thead>
@@ -267,12 +317,11 @@ function App() {
     function TR({label, pts, cap, note}) {
         return (
             <tr className="tbl-row">
-                <td style={{padding:'12px 20px'}}>
-                    {label}
-                    {cap && <span className="badge-cap">CAPPED</span>}
-                    {note && <span style={{display:'block',fontSize:'0.72rem',color:'var(--text-muted)',marginTop:2}}>{note}</span>}
+                <td style={{padding:'11px 16px', lineHeight:1.4}}>
+                    {label}{cap && <span className="badge-cap">CAPPED</span>}
+                    {note && <span style={{display:'block', fontSize:'0.7rem', color:'var(--text-muted)', marginTop:2}}>{note}</span>}
                 </td>
-                <td style={{padding:'12px 20px', textAlign:'right', fontWeight:600, color:'var(--accent)', whiteSpace:'nowrap'}}>
+                <td style={{padding:'11px 16px', textAlign:'right', fontWeight:600, color:'var(--accent)', whiteSpace:'nowrap'}}>
                     {pts}
                 </td>
             </tr>
@@ -281,124 +330,117 @@ function App() {
 
     function ListRow({label, pts, note}) {
         return (
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',
-                         padding:'12px 16px', borderRadius:12, background:'var(--bg-subtle)',
-                         marginBottom:8, gap:12, fontSize:'0.875rem'}}>
+            <div className="list-row">
                 <span>
                     {label}
-                    {note && <span style={{display:'block',fontSize:'0.72rem',color:'var(--text-muted)',marginTop:2}}>{note}</span>}
+                    {note && <span className="list-row-note">{note}</span>}
                 </span>
-                <span style={{fontWeight:600, color:'var(--accent)', whiteSpace:'nowrap', flexShrink:0}}>{pts}</span>
+                <span className="list-row-pts">{pts}</span>
             </div>
         );
     }
 
-    function BetweenRow({label, pts}) {
+    function BetweenRow({label, pts, note}) {
         return (
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',
-                         padding:'10px 0', borderBottom:'1px solid var(--border)', fontSize:'0.875rem', gap:8}}>
-                <span>{label}</span>
-                <span style={{fontWeight:600, color:'var(--accent)', whiteSpace:'nowrap', flexShrink:0}}>{pts}</span>
+            <div className="between-row">
+                <span>
+                    {label}
+                    {note && <span className="between-row-note">{note}</span>}
+                </span>
+                <span className="between-row-pts">{pts}</span>
             </div>
         );
     }
 
+    function InfoBox({color, children}) {
+        return <div className={`info-box v-${color}`}>{children}</div>;
+    }
+
+    /* ═══════════════════════════════ RENDER ═══════════════════════════════ */
     return (
-        <div style={{minHeight:'100vh', background:'var(--bg-page)', color:'var(--text-primary)'}}>
+        <div style={{minHeight:'100vh'}}>
 
             {/* ── HEADER ── */}
-            <div className="header-bg" style={{paddingBottom:40}}>
-                <div style={{maxWidth:1100, margin:'0 auto', padding:'24px 20px 0'}}>
-                    <div style={{display:'flex', flexWrap:'wrap', justifyContent:'space-between',
-                                 alignItems:'center', gap:16}}>
-                        {/* Title */}
-                        <div style={{display:'flex', alignItems:'center', gap:16}}>
-                            <i className="fa-solid fa-heart-pulse" style={{fontSize:'2.8rem', color:'white'}}></i>
+            <div className="header-bg" style={{paddingBottom:36}}>
+                <div className="header-inner">
+
+                    {/* Title row */}
+                    <div className="header-top">
+                        <div style={{display:'flex', alignItems:'center', gap:12}}>
+                            <i className="fa-solid fa-heart-pulse" style={{fontSize:'2.2rem', color:'white', flexShrink:0}}></i>
                             <div>
-                                <h1 style={{margin:0, fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:700,
-                                            color:'white', letterSpacing:'-0.02em'}}>
+                                <h1 style={{margin:0, fontSize:'clamp(1.2rem,4vw,2rem)', fontWeight:700,
+                                            color:'white', letterSpacing:'-0.02em', lineHeight:1.2}}>
                                     Vitality Points Explorer
                                 </h1>
-                                <p style={{margin:'2px 0 0', color:'rgba(255,255,255,0.8)', fontSize:'0.875rem'}}>
+                                <p style={{margin:'3px 0 0', color:'rgba(255,255,255,0.78)', fontSize:'0.8rem'}}>
                                     Discovery Vitality South Africa • Official Guide
                                 </p>
                             </div>
                         </div>
 
-                        {/* Controls */}
-                        <div style={{display:'flex', alignItems:'center', gap:10}}>
-                            {/* Theme toggle */}
-                            <div style={{display:'flex', border:'1px solid rgba(255,255,255,0.4)',
-                                         borderRadius:999, overflow:'hidden'}}>
-                                {[['light','fa-sun'],['dark','fa-moon'],['system','fa-desktop']].map(([t,icon]) => (
-                                    <button key={t} onClick={() => setT(t)}
-                                        style={{padding:'8px 14px', background: theme===t ? 'white' : 'transparent',
-                                                color: theme===t ? '#00a3e0' : 'white',
-                                                border:'none', cursor:'pointer', fontSize:'0.875rem',
-                                                transition:'background 0.15s, color 0.15s'}}>
-                                        <i className={`fa-solid ${icon}`}></i>
+                        <div className="header-controls">
+                            <div className="theme-toggle">
+                                {[['light','fa-sun'],['dark','fa-moon'],['system','fa-desktop']].map(([t,ic]) => (
+                                    <button key={t} className={`theme-btn${theme===t?' active':''}`} onClick={() => setT(t)}>
+                                        <i className={`fa-solid ${ic}`}></i>
                                     </button>
                                 ))}
                             </div>
-
                             <a href="https://www.discovery.co.za/assets/discoverycoza/vitality/how-to-join/points-and-partners.pdf"
-                               target="_blank"
-                               style={{display:'flex', alignItems:'center', gap:6,
-                                       background:'rgba(255,255,255,0.9)', color:'#00a3e0',
-                                       padding:'9px 18px', borderRadius:14, fontWeight:600,
-                                       fontSize:'0.875rem', textDecoration:'none', whiteSpace:'nowrap',
-                                       transition:'background 0.15s'}}>
+                               target="_blank" className="pdf-link">
                                 <i className="fa-solid fa-file-pdf"></i> PDF
                             </a>
                         </div>
                     </div>
 
-                    {/* DOB Panel */}
-                    <div style={{marginTop:28, background:'rgba(255,255,255,0.12)', backdropFilter:'blur(12px)',
-                                 borderRadius:24, padding:'24px 28px', border:'1px solid rgba(255,255,255,0.25)'}}>
-                        <div style={{display:'flex', flexWrap:'wrap', gap:20, alignItems:'center'}}>
-                            <div style={{flex:'1 1 220px'}}>
-                                <h2 style={{margin:0, color:'white', fontSize:'1.1rem', fontWeight:600}}>
+                    {/* DOB panel */}
+                    <div style={{marginTop:22, background:'rgba(255,255,255,0.12)', backdropFilter:'blur(12px)',
+                                 borderRadius:20, padding:'20px', border:'1px solid rgba(255,255,255,0.22)'}}>
+
+                        <div className="dob-row">
+                            <div style={{flex:'1 1 0', minWidth:0}}>
+                                <h2 style={{margin:0, color:'white', fontSize:'1rem', fontWeight:600}}>
                                     Personal Heart Rate Zones
                                 </h2>
-                                <p style={{margin:'4px 0 0', color:'rgba(255,255,255,0.75)', fontSize:'0.85rem'}}>
-                                    Enter your date of birth for exact BPM values in the fitness tables
+                                <p style={{margin:'4px 0 0', color:'rgba(255,255,255,0.72)', fontSize:'0.8rem'}}>
+                                    Enter your date of birth to see exact BPM targets in the fitness tables
                                 </p>
                             </div>
-                            <div style={{flex:'1 1 220px'}}>
+                            <div className="dob-input-wrap">
                                 <input type="date" value={dob}
                                     onChange={e => { setDob(e.target.value); calcHR(e.target.value); }}
-                                    className="themed-input"
-                                    style={{width:'100%', padding:'12px 16px', borderRadius:14,
-                                            fontSize:'1rem', border:'1px solid rgba(255,255,255,0.3)',
-                                            background:'rgba(255,255,255,0.95)', color:'#111827'}} />
+                                    style={{width:'100%', padding:'11px 14px', borderRadius:12,
+                                            fontSize:'0.95rem', border:'1px solid rgba(255,255,255,0.3)',
+                                            background:'rgba(255,255,255,0.95)', color:'#111827',
+                                            fontFamily:'inherit'}} />
                             </div>
                         </div>
 
                         {maxHR && (
-                            <div style={{marginTop:20, background:'var(--bg-card)', borderRadius:18,
-                                         padding:'20px 24px', color:'var(--text-primary)'}}>
-                                <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))', gap:20}}>
+                            <div style={{marginTop:16, background:'var(--bg-card)', borderRadius:16,
+                                         padding:'18px', color:'var(--text-primary)'}}>
+                                <div className="hr-grid">
                                     <div>
-                                        <div style={{fontSize:'0.72rem', color:'var(--text-muted)', letterSpacing:'0.08em', fontWeight:600}}>AGE</div>
-                                        <div style={{fontSize:'3.2rem', fontWeight:800, color:'var(--accent)', lineHeight:1}}>{age}</div>
+                                        <div style={{fontSize:'0.68rem', color:'var(--text-muted)', letterSpacing:'0.08em', fontWeight:700, textTransform:'uppercase'}}>Age</div>
+                                        <div style={{fontSize:'2.8rem', fontWeight:800, color:'var(--accent)', lineHeight:1}}>{age}</div>
                                     </div>
                                     <div>
-                                        <div style={{fontSize:'0.72rem', color:'var(--text-muted)', letterSpacing:'0.08em', fontWeight:600}}>MAX HR</div>
-                                        <div style={{fontSize:'3.2rem', fontWeight:800, lineHeight:1}}>{maxHR}</div>
-                                        <div style={{fontSize:'0.72rem', color:'var(--text-muted)', marginTop:2}}>BPM (220 − {age})</div>
+                                        <div style={{fontSize:'0.68rem', color:'var(--text-muted)', letterSpacing:'0.08em', fontWeight:700, textTransform:'uppercase'}}>Max HR</div>
+                                        <div style={{fontSize:'2.8rem', fontWeight:800, lineHeight:1}}>{maxHR}</div>
+                                        <div style={{fontSize:'0.68rem', color:'var(--text-muted)', marginTop:2}}>BPM (220 − {age})</div>
                                     </div>
-                                    <div style={{gridColumn:'span 2'}}>
-                                        <div style={{fontSize:'0.72rem', color:'var(--text-muted)', letterSpacing:'0.08em', fontWeight:600, marginBottom:10}}>YOUR ZONES</div>
-                                        <div style={{display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:10}}>
+                                    <div className="hr-zones-block">
+                                        <div style={{fontSize:'0.68rem', color:'var(--text-muted)', letterSpacing:'0.08em', fontWeight:700, textTransform:'uppercase', marginBottom:8}}>Your Zones</div>
+                                        <div className="zones-grid">
                                             {[
                                                 ['60–69%', z.z60_69, 'var(--bg-success)', 'var(--text-success)'],
                                                 ['70–79%', z.z70_79, 'var(--bg-warn)',    'var(--text-warn)'],
-                                                ['80%+',   z.z80p,   'var(--bg-orange)', 'var(--text-orange)'],
-                                            ].map(([label, val, bg, tc]) => (
-                                                <div key={label} style={{background:bg, borderRadius:14, padding:'10px 8px', textAlign:'center'}}>
-                                                    <div style={{fontSize:'0.7rem', fontWeight:600, color:tc, marginBottom:4}}>{label}</div>
-                                                    <div style={{fontFamily:'monospace', fontSize:'0.95rem', fontWeight:700}}>{val}</div>
+                                                ['80%+',   z.z80p,   'var(--bg-orange)',  'var(--text-orange)'],
+                                            ].map(([lbl, val, bg, tc]) => (
+                                                <div key={lbl} style={{background:bg, borderRadius:12, padding:'9px 6px', textAlign:'center'}}>
+                                                    <div style={{fontSize:'0.65rem', fontWeight:700, color:tc, marginBottom:3}}>{lbl}</div>
+                                                    <div style={{fontFamily:'monospace', fontSize:'0.82rem', fontWeight:700}}>{val}</div>
                                                 </div>
                                             ))}
                                         </div>
@@ -411,11 +453,11 @@ function App() {
             </div>
 
             {/* ── MAIN ── */}
-            <div style={{maxWidth:1100, margin:'0 auto', padding:'32px 20px'}}>
+            <div className="main-wrap">
 
                 {/* Nav pills */}
-                <div style={{display:'flex', flexWrap:'wrap', gap:8, marginBottom:36,
-                             borderBottom:'1px solid var(--border)', paddingBottom:20}}>
+                <div style={{display:'flex', flexWrap:'wrap', gap:6, marginBottom:28,
+                             borderBottom:'1px solid var(--border)', paddingBottom:16}}>
                     {[['#health','Health Check'],['#screenings','Screenings'],['#fitness','Fitness'],
                       ['#eating','Eat Healthy'],['#family','Family'],['#vaccinations','Vaccinations'],
                       ['#chronic','Chronic'],['#status','Status Levels']].map(([h,l]) => (
@@ -429,45 +471,47 @@ function App() {
                     title="01 • Online Assessments & Vitality Health Check"
                     subtitle="Max 25,000 points per year • Members 18+">
 
-                    <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))', gap:24}}>
+                    <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,280px),1fr))', gap:20}}>
                         <div>
-                            <h3 style={{margin:'0 0 12px', fontSize:'0.95rem', fontWeight:600}}>Online Assessments</h3>
+                            <h3 style={{margin:'0 0 10px', fontSize:'0.9rem', fontWeight:600}}>Online Assessments</h3>
                             <ListRow label="Vitality Age assessment" pts="1,500 once/year" />
-                            <ListRow label="Mental Wellbeing Assessments"
-                                     pts="500 × 2 = 1,000/year"
-                                     note="Assessments must be 6 months apart to earn both" />
+                            <ListRow label="Mental Wellbeing Assessments" pts="500 × 2 = 1,000/year"
+                                     note="Must be 6 months apart to earn both" />
                         </div>
                         <div>
-                            <h3 style={{margin:'0 0 8px', fontSize:'0.95rem', fontWeight:600}}>Vitality Health Check (5 measures)</h3>
-                            <p style={{margin:'0 0 10px', fontSize:'0.78rem', color:'var(--text-muted)'}}>
+                            <h3 style={{margin:'0 0 6px', fontSize:'0.9rem', fontWeight:600}}>Vitality Health Check (5 measures)</h3>
+                            <p style={{margin:'0 0 10px', fontSize:'0.75rem', color:'var(--text-muted)'}}>
                                 Blood pressure • Blood glucose • Cholesterol • Weight assessment • Non-smoker's declaration
                             </p>
                             <Tbl>
                                 <thead><tr className="v-thead">
-                                    <th style={{textAlign:'left',padding:'10px 14px',fontSize:'0.78rem',color:'var(--text-secondary)'}}>In-range</th>
-                                    <th style={{textAlign:'center',padding:'10px 14px',fontSize:'0.78rem',color:'var(--text-secondary)'}}>0 high-risk</th>
-                                    <th style={{textAlign:'center',padding:'10px 14px',fontSize:'0.78rem',color:'var(--text-secondary)'}}>1+ high-risk</th>
+                                    <th style={{textAlign:'left',  padding:'9px 12px', fontSize:'0.75rem', color:'var(--text-secondary)'}}>In-range</th>
+                                    <th style={{textAlign:'center',padding:'9px 12px', fontSize:'0.75rem', color:'var(--text-secondary)'}}>0 high-risk</th>
+                                    <th style={{textAlign:'center',padding:'9px 12px', fontSize:'0.75rem', color:'var(--text-secondary)'}}>1+ high-risk</th>
                                 </tr></thead>
                                 <tbody>
                                     {[['5','22,500','—'],['4','15,000','5,000'],['3','10,000','5,000'],
                                       ['2','7,500','5,000'],['1','5,000','5,000']].map(([n,a,b]) => (
                                         <tr key={n} className="tbl-row">
-                                            <td style={{padding:'9px 14px'}}>{n}</td>
-                                            <td style={{padding:'9px 14px',textAlign:'center',fontWeight:600,color:'var(--accent)'}}>{a}</td>
-                                            <td style={{padding:'9px 14px',textAlign:'center',fontWeight:600,color: b==='—' ? 'var(--text-muted)' : 'var(--accent)'}}>{b}</td>
+                                            <td style={{padding:'8px 12px'}}>{n}</td>
+                                            <td style={{padding:'8px 12px',textAlign:'center',fontWeight:600,color:'var(--accent)'}}>{a}</td>
+                                            <td style={{padding:'8px 12px',textAlign:'center',fontWeight:600,
+                                                        color: b==='—'?'var(--text-muted)':'var(--accent)'}}>{b}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </Tbl>
-                            <p style={{fontSize:'0.72rem',color:'var(--text-muted)',marginTop:6}}>
-                                Partial: 4 results = 5,000 • 3 results = 2,500 • &lt;3 = 0 &nbsp;|&nbsp; Re-tests must be ≥90 days apart
+                            <p style={{fontSize:'0.7rem', color:'var(--text-muted)', marginTop:6}}>
+                                Partial: 4 = 5,000 pts • 3 = 2,500 pts • &lt;3 = 0 pts &nbsp;|&nbsp; Re-tests must be ≥90 days apart
                             </p>
                         </div>
                     </div>
 
-                    <div className="v-info" style={{borderRadius:14, padding:'14px 18px', marginTop:18, fontSize:'0.875rem'}}>
-                        <strong>🏅 Vitality 65+ Extras:</strong> Falls risk assessment <Pts v="500 pts" /> (counts towards 22,500 max) •
-                        Vitality Functional Assessment <Pts v="2,500 pts/year" /> • Completing VHC for 65+ unlocks a personalised clinical report
+                    <div style={{marginTop:16}}>
+                        <InfoBox color="info">
+                            <strong>🏅 Vitality 65+ Extras:</strong> Falls risk assessment <Pts v="500 pts" /> (counts towards 22,500 max) •
+                            Vitality Functional Assessment <Pts v="2,500 pts/year" /> • VHC for 65+ unlocks a personalised clinical report
+                        </InfoBox>
                     </div>
                 </SectionCard>
 
@@ -476,160 +520,163 @@ function App() {
                 <SectionCard id="screenings" icon="🔬"
                     title="02 • Additional Screenings"
                     subtitle="Age & gender specific">
-                    <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:'0 32px'}}>
+                    <div className="two-col">
                         {[
-                            ['Colon cancer screening (45+)', '2,500 once/year', 'Colonoscopy / FIT / FOBT — colonoscopy carries over 10 years'],
+                            ['Colon cancer screening (45+)', '2,500 once/year', 'Colonoscopy/FIT/FOBT — colonoscopy carries over 10 years'],
                             ['Bone mass density (women 65+, men 70+)', '2,500 once/2 years', 'DEXA scan — valid for both years'],
                             ['Mammogram (women 40+)', '2,500 once/2 years', 'Points carry over to following year'],
                             ['Pap smear (women 25–65)', '2,500', 'Once/3 years — carries over'],
-                            ['HPV cervical cancer test (women 25–65)', '2,500', 'Alternative to Pap smear — once/5 years. Points for one or the other only'],
+                            ['HPV cervical cancer test (women 25–65)', '2,500', 'Alternative to Pap — once/5 years. One or the other only'],
                             ['Dental check-up', '1,000 once/year', null],
-                            ['Glaucoma / vision test (60+)', '1,000 once/year', 'One of the two tests — whichever comes first'],
+                            ['Glaucoma / vision test (60+)', '1,000 once/year', 'One of the two — whichever is first'],
                             ['Hearing test (65+ only)', '1,000 once in lifetime', 'Audiologist or Acoustician'],
                             ['Optometrist (65+ only)', 'Up to 3,500 once/year', null],
                             ['Tdap vaccine (65+)', 'Points awarded', 'Bring GP script to VHC for 65+'],
                             ['Premier PLUS GP consult (65+ only)', 'Up to 2,500 once/year', null],
                             ['First HIV test (18+)', '7,500 once in lifetime', null],
                             ['HIV counselling & testing — subsequent years (18+)', '1,000 once/year', null],
-                        ].map(([l,p,n]) => <BetweenRow key={l} label={<span>{l}{n && <span style={{display:'block',fontSize:'0.72rem',color:'var(--text-muted)',marginTop:2}}>{n}</span>}</span>} pts={p} />)}
+                        ].map(([l,p,n]) => <BetweenRow key={l} label={l} pts={p} note={n} />)}
                     </div>
+                    <p style={{fontSize:'0.7rem', color:'var(--text-muted)', marginTop:10}}>
+                        Pap smear and HPV test: points for one or the other, not both.
+                    </p>
                 </SectionCard>
 
 
                 {/* ══ 03 FITNESS ══ */}
                 <SectionCard id="fitness" icon="🏃"
                     title="03 • Earn Points for Getting Active"
-                    subtitle="One activity per day (highest wins) • Max 25,000 fitness pts/year + 10,000 Cardio Fitness Level pts (separate)">
+                    subtitle="One activity per day — highest wins • Max 25,000 pts/year + 10,000 Cardio Fitness pts (separate)">
 
                     {/* Cardio Fitness Level */}
-                    <div className="v-info" style={{borderRadius:16, padding:'16px 20px', marginBottom:20}}>
-                        <div style={{fontWeight:600, marginBottom:8}}>
-                            💙 Vitality Cardio Fitness Level (VO₂ max) — up to 10,000 pts/year — separate from 25,000 cap
-                        </div>
-                        <p style={{fontSize:'0.78rem', marginBottom:12, opacity:0.85}}>
-                            Requires 5 device readings or a Vitality Fitness Assessment (VFA). Via compatible fitness watch or VFA.
+                    <InfoBox color="info">
+                        <strong>💙 Vitality Cardio Fitness Level (VO₂ max)</strong> — up to <Pts v="10,000 pts/year" /> — separate from 25,000 cap
+                        <p style={{fontSize:'0.75rem', margin:'6px 0 10px', opacity:0.85}}>
+                            Requires 5 device readings or a Vitality Fitness Assessment (VFA).
                         </p>
-                        <div style={{display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:8, textAlign:'center', fontSize:'0.8rem'}}>
+                        <div className="cfl-grid">
                             {[['Superior','10,000'],['Excellent','7,000'],['Good','4,500'],['Fair','2,500'],['Low','1,000']].map(([l,p]) => (
-                                <div key={l} style={{background:'var(--bg-card)', borderRadius:10, padding:'10px 4px'}}>
-                                    <div style={{color:'var(--text-secondary)', fontSize:'0.72rem', marginBottom:3}}>{l}</div>
-                                    <div style={{fontWeight:700, color:'var(--accent)'}}>{p}</div>
+                                <div key={l} style={{background:'var(--bg-card)', borderRadius:10, padding:'9px 4px', textAlign:'center'}}>
+                                    <div style={{color:'var(--text-secondary)', fontSize:'0.68rem', marginBottom:2}}>{l}</div>
+                                    <div style={{fontWeight:700, color:'var(--accent)', fontSize:'0.85rem'}}>{p}</div>
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </InfoBox>
 
                     {/* Speed workout */}
-                    <div className="v-success" style={{borderRadius:14, padding:'12px 18px', marginBottom:20, fontSize:'0.875rem'}}>
-                        <strong>⚡ Speed Workout (30+ min = 100 pts, capped at 1,000/year):</strong>&nbsp;
-                        🏃 Running ≥5.5 km/h &nbsp;•&nbsp; 🏊 Swimming ≥1.5 km/h &nbsp;•&nbsp; 🚴 Cycling ≥10 km/h
+                    <div style={{marginTop:12, marginBottom:16}}>
+                        <InfoBox color="success">
+                            <strong>⚡ Speed Workout</strong> — 30+ min = 100 pts, capped at 1,000/year<br/>
+                            <span style={{fontSize:'0.8rem'}}>🏃 Running ≥5.5 km/h &nbsp;•&nbsp; 🏊 Swimming ≥1.5 km/h &nbsp;•&nbsp; 🚴 Cycling ≥10 km/h</span>
+                        </InfoBox>
                     </div>
 
                     {/* Ages 18–64 */}
-                    <h3 style={{margin:'0 0 10px', fontSize:'1rem', fontWeight:600}}>Ages 18–64</h3>
+                    <h3 style={{margin:'16px 0 8px', fontSize:'0.95rem', fontWeight:600}}>Ages 18–64</h3>
                     <Tbl>
                         <THead cols={['Activity','Points']} />
                         <tbody>
-                            <TR label="Vitality online workout (30+ min)" pts="50"  cap={true} />
+                            <TR label="Vitality online workout (30+ min)" pts="50"  cap />
                             <TR label="Vitality Anywhere (30+ min)"       pts="100" />
                             <TR label="Gym workout (30+ min)"             pts="100" />
-                            <TR label="5,000–9,999 steps"                 pts="50"  cap={true} note="Capped at 1,200 pts/month" />
-                            <TR label="10,000+ steps"                     pts="100" note="Capped at 1,200 pts/month" />
-                            <TR label="parkrun"                           pts="300" />
-                            <TR label="Handicaps Network Africa"          pts="100" />
-                            <TR label="Speed workout (30+ min)"           pts="100" cap={true} />
-                            <TR label={`30–59 min @ ${z.z60_69}`}         pts="100" cap={true} />
-                            <TR label={`60–89 min @ ${z.z60_69}`}         pts="200" cap={true} />
-                            <TR label={`90+ min @ ${z.z60p}`}             pts="300" />
-                            <TR label={`15–29 min @ ${z.z70p}`}           pts="100" cap={true} />
-                            <TR label={`30–59 min @ ${z.z70_79}`}         pts="200" />
-                            <TR label={`60+ min @ ${z.z70p}`}             pts="300" />
-                            <TR label={`30+ min @ ${z.z80p}`}             pts="300" />
+                            <TR label="5,000–9,999 steps"  pts="50"  cap note="Steps capped at 1,200 pts/month" />
+                            <TR label="10,000+ steps"       pts="100"     note="Steps capped at 1,200 pts/month" />
+                            <TR label="parkrun"             pts="300" />
+                            <TR label="Handicaps Network Africa" pts="100" />
+                            <TR label="Speed workout (30+ min)" pts="100" cap />
+                            <TR label={`30–59 min @ ${z.z60_69}`} pts="100" cap />
+                            <TR label={`60–89 min @ ${z.z60_69}`} pts="200" cap />
+                            <TR label={`90+ min @ ${z.z60p}`}     pts="300" />
+                            <TR label={`15–29 min @ ${z.z70p}`}   pts="100" cap />
+                            <TR label={`30–59 min @ ${z.z70_79}`} pts="200" />
+                            <TR label={`60+ min @ ${z.z70p}`}     pts="300" />
+                            <TR label={`30+ min @ ${z.z80p}`}     pts="300" />
                         </tbody>
                     </Tbl>
-                    <p style={{fontSize:'0.72rem', color:'var(--text-muted)', margin:'6px 0 24px'}}>
-                        CAPPED rows limited to 1,000 pts/year towards Vitality Status. Capped points still count towards Active Rewards goals.
+                    <p style={{fontSize:'0.7rem', color:'var(--text-muted)', margin:'5px 0 18px'}}>
+                        CAPPED rows: limited to 1,000 pts/year towards Vitality Status. Capped points still count towards Active Rewards goals.
                     </p>
 
                     {/* Ages 65+ */}
-                    <h3 style={{margin:'0 0 10px', fontSize:'1rem', fontWeight:600}}>Ages 65+</h3>
+                    <h3 style={{margin:'0 0 8px', fontSize:'0.95rem', fontWeight:600}}>Ages 65+</h3>
                     <Tbl>
                         <THead cols={['Activity','Points']} />
                         <tbody>
-                            <TR label="Vitality online workout (30+ min)" pts="50"  cap={true} />
+                            <TR label="Vitality online workout (30+ min)" pts="50"  cap />
                             <TR label="Vitality Anywhere (30+ min)"       pts="100" />
                             <TR label="Gym workout (30+ min)"             pts="100" />
-                            <TR label="5,000–7,499 steps"                 pts="50"  cap={true} note="Capped at 1,200 pts/month" />
-                            <TR label="7,500+ steps"                      pts="100" note="Capped at 1,200 pts/month" />
-                            <TR label="parkrun"                           pts="300" />
-                            <TR label="Handicaps Network Africa"          pts="100" />
-                            <TR label="Speed workout (30+ min)"           pts="100" cap={true} />
-                            <TR label={`30–59 min @ ${z.z60_69}`}         pts="100" />
-                            <TR label={`60–89 min @ ${z.z60_69}`}         pts="200" />
-                            <TR label={`90+ min @ ${z.z60p}`}             pts="300" />
-                            <TR label={`15–29 min @ ${z.z70p}`}           pts="100" cap={true} />
-                            <TR label={`30+ min @ ${z.z70p}`}             pts="300" />
+                            <TR label="5,000–7,499 steps" pts="50"  cap note="Steps capped at 1,200 pts/month" />
+                            <TR label="7,500+ steps"       pts="100"     note="Steps capped at 1,200 pts/month" />
+                            <TR label="parkrun"            pts="300" />
+                            <TR label="Handicaps Network Africa" pts="100" />
+                            <TR label="Speed workout (30+ min)" pts="100" cap />
+                            <TR label={`30–59 min @ ${z.z60_69}`} pts="100" />
+                            <TR label={`60–89 min @ ${z.z60_69}`} pts="200" />
+                            <TR label={`90+ min @ ${z.z60p}`}     pts="300" />
+                            <TR label={`15–29 min @ ${z.z70p}`}   pts="100" cap />
+                            <TR label={`30+ min @ ${z.z70p}`}     pts="300" />
                         </tbody>
                     </Tbl>
-                    <p style={{fontSize:'0.72rem', color:'var(--text-muted)', margin:'6px 0 24px'}}>
-                        CAPPED rows limited to 1,000 pts/year towards Vitality Status.
+                    <p style={{fontSize:'0.7rem', color:'var(--text-muted)', margin:'5px 0 18px'}}>
+                        CAPPED rows: limited to 1,000 pts/year towards Vitality Status.
                     </p>
 
                     {/* Endurance */}
-                    <div className="v-orange" style={{borderRadius:16, padding:'16px 20px', marginBottom:16}}>
-                        <h3 style={{margin:'0 0 8px', fontSize:'0.95rem', fontWeight:600}}>
-                            🏅 Endurance & High Performance Athletes
-                        </h3>
-                        <p style={{fontSize:'0.78rem', margin:'0 0 12px', opacity:0.85}}>
-                            Apply via Discovery app. Points are <em>in addition to</em> the standard tables above.
+                    <InfoBox color="orange">
+                        <h3 style={{margin:'0 0 6px', fontSize:'0.9rem', fontWeight:600}}>🏅 Endurance & High Performance Athletes</h3>
+                        <p style={{fontSize:'0.75rem', margin:'0 0 10px', opacity:0.85}}>
+                            Apply via Discovery app. Points are <em>in addition to</em> the tables above.
                         </p>
                         <Tbl>
                             <THead cols={['Activity','Points']} />
                             <tbody>
-                                <TR label={`90–119 min @ ${z.z60_69}`} pts="300" />
+                                <TR label={`90–119 min @ ${z.z60_69}`}  pts="300" />
                                 <TR label={`120–179 min @ ${z.z60_69}`} pts="450" />
                                 <TR label={`180+ min @ ${z.z60p}`}      pts="600" />
                                 <TR label={`90–119 min @ ${z.z70p}`}    pts="450" />
                                 <TR label={`120+ min @ ${z.z70p}`}      pts="600" />
                             </tbody>
                         </Tbl>
-                    </div>
+                    </InfoBox>
 
                     {/* Race Events */}
-                    <div className="v-purple" style={{borderRadius:16, padding:'16px 20px'}}>
-                        <h3 style={{margin:'0 0 8px', fontSize:'0.95rem', fontWeight:600}}>🏁 Timed & Verified Race Events</h3>
-                        <p style={{fontSize:'0.78rem', margin:'0 0 12px', opacity:0.85}}>
-                            Claim via Discovery app with race certificate. Duathletes/triathletes earn full points per discipline.
-                        </p>
-                        <div style={{overflowX:'auto', borderRadius:12, border:'1px solid var(--border)'}}>
-                            <table style={{width:'100%', fontSize:'0.78rem', textAlign:'center'}}>
-                                <thead><tr className="v-thead">
-                                    <th style={{textAlign:'left',padding:'9px 12px'}}>Discipline</th>
-                                    <th style={{padding:'9px 12px', color:'var(--accent)'}}>300 pts</th>
-                                    <th style={{padding:'9px 12px', color:'var(--accent)'}}>600 pts</th>
-                                    <th style={{padding:'9px 12px', color:'var(--accent)'}}>1,500 pts</th>
-                                    <th style={{padding:'9px 12px', color:'var(--accent)'}}>3,000 pts</th>
-                                </tr></thead>
-                                <tbody>
-                                    {[
-                                        ['🚶 Walking/Running','5–9 km','10–20 km','21–41 km','42 km+'],
-                                        ['🏊 Swimming','0.5–1 km','1.1–3 km','3.1–5.9 km','6 km+'],
-                                        ['🚴 Cycling','25–49 km','50–99 km','100–179 km','180 km+'],
-                                        ['🏔 Trail Running','3.5–7.9 km','8–14.9 km','15–29.9 km','30 km+'],
-                                        ['💪 Obstacle Course','3.5–7.9 km','8–14.9 km','15–29.9 km','30 km+'],
-                                        ['🚵 Mountain Bike','15–35.9 km','36–64.9 km','65–119.9 km','120 km+'],
-                                        ['🛶 Canoe','5–9 km','10–29 km','30–39 km','40 km+'],
-                                        ['🏄 Paddle Board','5–9 km','10–29 km','30–39 km','40 km+'],
-                                        ['🌊 Surfski','5–9 km','10–29 km','30–39 km','40 km+'],
-                                    ].map(([d,...c]) => (
-                                        <tr key={d} className="tbl-row">
-                                            <td style={{textAlign:'left',padding:'8px 12px',fontWeight:500}}>{d}</td>
-                                            {c.map((v,i) => <td key={i} style={{padding:'8px 12px'}}>{v}</td>)}
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                    <div style={{marginTop:12}}>
+                        <InfoBox color="purple">
+                            <h3 style={{margin:'0 0 4px', fontSize:'0.9rem', fontWeight:600}}>🏁 Timed & Verified Race Events</h3>
+                            <p style={{fontSize:'0.75rem', margin:'0 0 10px', opacity:0.85}}>
+                                Claim via Discovery app with race certificate. Duathletes/triathletes earn full points per discipline.
+                            </p>
+                            <div className="tbl-wrap">
+                                <table style={{fontSize:'0.78rem', textAlign:'center'}}>
+                                    <thead><tr className="v-thead">
+                                        <th style={{textAlign:'left', padding:'8px 10px', whiteSpace:'nowrap'}}>Discipline</th>
+                                        <th style={{padding:'8px 8px', color:'var(--accent)', whiteSpace:'nowrap'}}>300 pts</th>
+                                        <th style={{padding:'8px 8px', color:'var(--accent)', whiteSpace:'nowrap'}}>600 pts</th>
+                                        <th style={{padding:'8px 8px', color:'var(--accent)', whiteSpace:'nowrap'}}>1,500 pts</th>
+                                        <th style={{padding:'8px 8px', color:'var(--accent)', whiteSpace:'nowrap'}}>3,000 pts</th>
+                                    </tr></thead>
+                                    <tbody>
+                                        {[
+                                            ['🚶 Walk/Run',      '5–9 km',      '10–20 km',    '21–41 km',     '42 km+'],
+                                            ['🏊 Swimming',      '0.5–1 km',    '1.1–3 km',    '3.1–5.9 km',   '6 km+'],
+                                            ['🚴 Cycling',       '25–49 km',    '50–99 km',    '100–179 km',   '180 km+'],
+                                            ['🏔 Trail Run',     '3.5–7.9 km',  '8–14.9 km',   '15–29.9 km',   '30 km+'],
+                                            ['💪 Obstacle',      '3.5–7.9 km',  '8–14.9 km',   '15–29.9 km',   '30 km+'],
+                                            ['🚵 MTB',           '15–35.9 km',  '36–64.9 km',  '65–119.9 km',  '120 km+'],
+                                            ['🛶 Canoe',         '5–9 km',      '10–29 km',    '30–39 km',     '40 km+'],
+                                            ['🏄 Paddle Board',  '5–9 km',      '10–29 km',    '30–39 km',     '40 km+'],
+                                            ['🌊 Surfski',       '5–9 km',      '10–29 km',    '30–39 km',     '40 km+'],
+                                        ].map(([d,...cols]) => (
+                                            <tr key={d} className="tbl-row">
+                                                <td style={{textAlign:'left', padding:'7px 10px', fontWeight:500, whiteSpace:'nowrap'}}>{d}</td>
+                                                {cols.map((v,i) => <td key={i} style={{padding:'7px 8px', whiteSpace:'nowrap'}}>{v}</td>)}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </InfoBox>
                     </div>
                 </SectionCard>
 
@@ -638,132 +685,135 @@ function App() {
                 <SectionCard id="eating" icon="🥗"
                     title="04 • Choose to Eat Healthy"
                     subtitle="Max 12,000 points per year (18+)">
-                    <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))', gap:16, marginBottom:20}}>
-                        <div className="v-success" style={{borderRadius:18, padding:'24px', textAlign:'center'}}>
-                            <div style={{fontSize:'3rem', fontWeight:800}}>+20</div>
-                            <div style={{fontSize:'0.85rem', marginTop:4}}>points per HealthyFood item</div>
+                    <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:14}}>
+                        <div className="v-success" style={{borderRadius:16, padding:'20px 12px', textAlign:'center'}}>
+                            <div style={{fontSize:'2.4rem', fontWeight:800}}>+20</div>
+                            <div style={{fontSize:'0.78rem', marginTop:3}}>per HealthyFood item</div>
                         </div>
-                        <div className="v-red" style={{borderRadius:18, padding:'24px', textAlign:'center', color:'var(--text-orange)'}}>
-                            <div style={{fontSize:'3rem', fontWeight:800}}>−20</div>
-                            <div style={{fontSize:'0.85rem', marginTop:4}}>points per unhealthy item</div>
+                        <div className="v-red" style={{borderRadius:16, padding:'20px 12px', textAlign:'center'}}>
+                            <div style={{fontSize:'2.4rem', fontWeight:800}}>−20</div>
+                            <div style={{fontSize:'0.78rem', marginTop:3}}>per unhealthy item</div>
                         </div>
                     </div>
                     <ListRow label="Dietitian consultation" pts="Up to 1,000" />
                     <ListRow label="HealthyWeight nutrition consultation" pts="1,000" />
-                    <ListRow label="4-week HealthyWeight check-in" pts="Additional points" note="After first HealthyWeight programme" />
-                    <div className="v-warn" style={{borderRadius:12, padding:'12px 16px', marginTop:8, fontSize:'0.875rem'}}>
-                        Expecting mothers earn <strong>DOUBLE points</strong> on HealthyFood purchases during pregnancy and until baby is 6 months old.
+                    <ListRow label="4-week HealthyWeight check-in" pts="Additional points"
+                             note="After first HealthyWeight programme" />
+                    <div style={{marginTop:10}}>
+                        <InfoBox color="warn">
+                            Expecting mothers earn <strong>DOUBLE points</strong> on HealthyFood purchases during pregnancy and until baby is 6 months old.
+                        </InfoBox>
                     </div>
                 </SectionCard>
 
 
                 {/* ══ 05 FAMILY ══ */}
-                <SectionCard id="family" icon="👨‍👩‍👧"
-                    title="05 • Expecting & New Parents">
-                    <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', gap:10}}>
-                        <ListRow label="Antenatal classes (expectant parents)" pts="2,000 once/year" />
-                        <ListRow label="Well Baby Clinic visits (Clicks / Dis-Chem)" pts="Up to 2,500/year" note="Must be on Vitality Baby" />
-                        <ListRow label="Tdap vaccine during pregnancy" pts="1,000 during pregnancy" />
-                    </div>
-                    <div className="v-warn" style={{borderRadius:12, padding:'12px 16px', marginTop:8, fontSize:'0.875rem'}}>
-                        Expecting mothers earn <strong>DOUBLE points</strong> on selected fitness activities <em>and</em> HealthyFood purchases during pregnancy and until baby is 6 months old.
+                <SectionCard id="family" icon="👨‍👩‍👧" title="05 • Expecting & New Parents">
+                    <ListRow label="Antenatal classes (expectant parents)" pts="2,000 once/year" />
+                    <ListRow label="Well Baby Clinic visits (Clicks / Dis-Chem)" pts="Up to 2,500/year"
+                             note="Must be on Vitality Baby" />
+                    <ListRow label="Tdap vaccine during pregnancy" pts="1,000 during pregnancy" />
+                    <div style={{marginTop:10}}>
+                        <InfoBox color="warn">
+                            Expecting mothers earn <strong>DOUBLE points</strong> on selected fitness activities <em>and</em> HealthyFood purchases during pregnancy and until baby is 6 months old.
+                        </InfoBox>
                     </div>
                 </SectionCard>
 
 
                 {/* ══ 06 VACCINATIONS ══ */}
-                <SectionCard id="vaccinations" icon="💉"
-                    title="06 • Vaccinations for the Whole Family">
-                    <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:'0 32px'}}>
+                <SectionCard id="vaccinations" icon="💉" title="06 • Vaccinations for the Whole Family">
+                    <div className="two-col">
                         {[
-                            ['Flu vaccination (6 months+)', '1,000 once/year', 'March–September only'],
-                            ['HPV vaccinations (9–14 yrs)', '1,000 once in lifetime', '2 doses — full course'],
-                            ['HPV vaccinations (15–26 yrs)', '1,000 once in lifetime', '3 doses, 6 months apart'],
-                            ['Pneumococcal vaccination (65+)', '1,000 per vaccination, once in lifetime', null],
-                            ['Shingles vaccination (60+)', '1,000 once in lifetime', null],
-                            ['Childhood vaccinations (under 2 yrs)', '500 per vaccination event', 'Submit proof before 2nd birthday'],
-                            ['Childhood vaccinations (4–7 yrs)', '1,000 once in lifetime', '5 repeat vaccinations'],
-                            ['Meningococcal conjugate vaccine (2–23 yrs)', '500 once in lifetime', null],
-                        ].map(([l,p,n]) => <BetweenRow key={l} label={<span>{l}{n && <span style={{display:'block',fontSize:'0.72rem',color:'var(--text-muted)',marginTop:2}}>{n}</span>}</span>} pts={p} />)}
+                            ['Flu vaccination (6 months+)',            '1,000 once/year',             'March–September only'],
+                            ['HPV vaccinations (9–14 yrs)',            '1,000 once in lifetime',      '2 doses — full course'],
+                            ['HPV vaccinations (15–26 yrs)',           '1,000 once in lifetime',      '3 doses, 6 months apart'],
+                            ['Pneumococcal vaccination (65+)',         '1,000 per vax, once lifetime', null],
+                            ['Shingles vaccination (60+)',             '1,000 once in lifetime',      null],
+                            ['Childhood vaccinations (under 2 yrs)',  '500 per vaccination event',   'Submit proof before 2nd birthday'],
+                            ['Childhood vaccinations (4–7 yrs)',      '1,000 once in lifetime',      '5 repeat vaccinations'],
+                            ['Meningococcal conjugate (2–23 yrs)',    '500 once in lifetime',        null],
+                        ].map(([l,p,n]) => <BetweenRow key={l} label={l} pts={p} note={n} />)}
                     </div>
                 </SectionCard>
 
 
                 {/* ══ 07 CHRONIC ══ */}
-                <SectionCard id="chronic" icon="🩺"
-                    title="07 • Managing Chronic Conditions">
-                    <p style={{marginBottom:14, color:'var(--text-secondary)'}}>
+                <SectionCard id="chronic" icon="🩺" title="07 • Managing Chronic Conditions">
+                    <p style={{marginBottom:12, color:'var(--text-secondary)', fontSize:'0.875rem'}}>
                         Registered on the Chronic Illness Benefit with Discovery Health. Qualifying conditions:
                     </p>
-                    <div style={{display:'flex', flexWrap:'wrap', gap:8, marginBottom:18}}>
+                    <div style={{display:'flex', flexWrap:'wrap', gap:8, marginBottom:16}}>
                         {['Diabetes','High blood pressure','Hyperlipidaemia','Ischemic heart disease'].map(c => (
                             <span key={c} className="v-info"
-                                  style={{padding:'6px 16px', borderRadius:999, fontSize:'0.875rem', fontWeight:500}}>
+                                  style={{padding:'5px 14px', borderRadius:999, fontSize:'0.82rem', fontWeight:500}}>
                                 {c}
                             </span>
                         ))}
                     </div>
-                    <p style={{fontSize:'1.5rem', fontWeight:800, color:'var(--accent)', margin:0}}>
+                    <p style={{fontSize:'1.4rem', fontWeight:800, color:'var(--accent)', margin:0}}>
                         Up to 2,500 points per year
                     </p>
                 </SectionCard>
 
 
-                {/* ══ 08 STATUS THRESHOLDS ══ */}
+                {/* ══ 08 STATUS ══ */}
                 <SectionCard id="status" icon="⭐"
                     title="08 • Points to Reach Each Status"
                     subtitle="You start at Blue. Additional adult dependants earn max 25,000 pts/year.">
                     <Tbl>
                         <thead><tr className="v-thead">
-                            <th style={{textAlign:'left',padding:'12px 16px',fontSize:'0.8rem',color:'var(--text-secondary)'}}>Membership</th>
-                            {[['🔵','Blue','#60a5fa'],['🥉','Bronze','#d97706'],['🥈','Silver','#94a3b8'],['🥇','Gold','#eab308'],['💎','Diamond','#22d3ee']].map(([e,l,c]) => (
-                                <th key={l} style={{padding:'12px 10px',textAlign:'center',fontSize:'0.8rem',color:c,fontWeight:700}}>
-                                    {e} {l}
+                            <th style={{textAlign:'left', padding:'11px 14px', fontSize:'0.78rem', color:'var(--text-secondary)'}}>Membership</th>
+                            {[['🔵','Blue','#60a5fa'],['🥉','Bronze','#d97706'],['🥈','Silver','#94a3b8'],
+                              ['🥇','Gold','#eab308'],['💎','Diamond','#22d3ee']].map(([e,l,c]) => (
+                                <th key={l} style={{padding:'11px 8px', textAlign:'center', fontSize:'0.78rem', color:c, fontWeight:700, whiteSpace:'nowrap'}}>
+                                    {e}<span style={{display:'block', fontSize:'0.65rem'}}>{l}</span>
                                 </th>
                             ))}
                         </tr></thead>
                         <tbody>
                             {[
-                                ['Single member',             'Start','7,500','25,000','40,000','50,000'],
-                                ['Main + 1 adult (18+)',      'Start','15,000','50,000','80,000','100,000'],
-                                ['Main + 2 adults (18+)',     'Start','18,750','62,500','100,000','125,000'],
+                                ['Single member',        'Start','7,500', '25,000', '40,000', '50,000'],
+                                ['Main + 1 adult (18+)', 'Start','15,000','50,000', '80,000', '100,000'],
+                                ['Main + 2 adults (18+)','Start','18,750','62,500', '100,000','125,000'],
                             ].map(([label,...vals]) => (
                                 <tr key={label} className="tbl-row">
-                                    <td style={{padding:'12px 16px',fontWeight:500}}>{label}</td>
+                                    <td style={{padding:'11px 14px', fontWeight:500, fontSize:'0.85rem'}}>{label}</td>
                                     {vals.map((v,i) => (
-                                        <td key={i} style={{padding:'12px 10px',textAlign:'center',
-                                                           fontWeight: v==='Start'?400:600,
-                                                           color: v==='Start' ? 'var(--text-muted)' : 'var(--accent)'}}>
+                                        <td key={i} style={{padding:'11px 8px', textAlign:'center', fontWeight: v==='Start'?400:600,
+                                            color: v==='Start'?'var(--text-muted)':'var(--accent)', fontSize:'0.85rem'}}>
                                             {v}
                                         </td>
                                     ))}
                                 </tr>
                             ))}
-                            <tr className="tbl-row v-row-alt">
-                                <td style={{padding:'12px 16px',color:'var(--text-muted)',fontSize:'0.85rem'}}>Each additional adult (18+)</td>
+                            <tr className="tbl-row" style={{background:'var(--bg-subtle)'}}>
+                                <td style={{padding:'10px 14px', color:'var(--text-muted)', fontSize:'0.78rem'}}>Each additional adult (18+)</td>
                                 {['—','+3,750','+12,500','+20,000','+25,000'].map((v,i) => (
-                                    <td key={i} style={{padding:'12px 10px',textAlign:'center',color:'var(--text-secondary)',fontSize:'0.85rem'}}>{v}</td>
+                                    <td key={i} style={{padding:'10px 8px', textAlign:'center', color:'var(--text-secondary)', fontSize:'0.78rem'}}>{v}</td>
                                 ))}
                             </tr>
                         </tbody>
                     </Tbl>
-                    <p style={{fontSize:'0.72rem',color:'var(--text-muted)',marginTop:8}}>
-                        When a child dependant turns 18, the status threshold only increases the following January.
+                    <p style={{fontSize:'0.7rem', color:'var(--text-muted)', marginTop:8}}>
+                        When a child dependant turns 18, the threshold only increases the following January.
                     </p>
-
-                    <div className="v-warn" style={{borderRadius:14, padding:'14px 18px', marginTop:16, fontSize:'0.875rem'}}>
-                        <strong>🚗 VitalityDrive Bonus (under 30s):</strong> Active Vitality members under 30 using the Discovery Insure app
-                        with TAG solution earn <strong>500 additional Vitality points per month</strong> when their Driver Performance Score (DPS) exceeds 1,000 points.
+                    <div style={{marginTop:12}}>
+                        <InfoBox color="warn">
+                            <strong>🚗 VitalityDrive Bonus (under 30s):</strong> Using Discovery Insure app with TAG solution,
+                            earn <strong>500 additional pts/month</strong> when Driver Performance Score (DPS) exceeds 1,000 points.
+                        </InfoBox>
                     </div>
                 </SectionCard>
 
 
                 {/* Footer */}
-                <p style={{textAlign:'center', fontSize:'0.72rem', color:'var(--text-muted)', marginTop:8, paddingBottom:48}}>
+                <p style={{textAlign:'center', fontSize:'0.68rem', color:'var(--text-muted)', paddingBottom:40, lineHeight:1.6}}>
                     All data sourced from the official Discovery Vitality Points &amp; Partners PDF (RCK_1158654DHV_02/12/2026_V1) •
                     Discovery Vitality (Pty) Ltd, Reg. 1999/007736/07 • Terms and conditions apply •{' '}
                     <a href="https://www.discovery.co.za" style={{color:'var(--accent)'}}>discovery.co.za</a>
                 </p>
+
             </div>
         </div>
     );
